@@ -1,0 +1,91 @@
+cabal-version:      3.4
+name:               brfteleterrassen1
+version:            0.1.0.0
+-- synopsis:
+-- description:
+homepage:           https://brfteleterrassen1.se/
+license:            MIT
+author:             Johan Yngman
+maintainer:         styrelsen.teleterrassen1@gmail.com
+-- copyright:
+category:           Web
+build-type:         Simple
+-- extra-doc-files:    CHANGELOG.md
+-- extra-source-files:
+
+common warnings
+    ghc-options:      -Weverything -Wno-missing-signatures -Wno-missing-exported-signatures
+                      -Wno-implicit-prelude -Wno-missing-export-lists -Wno-missing-import-lists
+                      -Wno-monomorphism-restriction -Wno-type-defaults -Wno-missing-safe-haskell-mode
+                      -Wno-unsafe -Wno-missing-local-signatures -Wno-missing-kind-signatures
+                      -Wno-all-missed-specialisations -Wno-missed-specialisations -Wno-ambiguous-fields
+                      -Wno-missing-deriving-strategies -Wno-prepositive-qualified-module
+                      -Wno-unused-top-binds -threaded
+
+common extensions
+    default-extensions: OverloadedStrings,
+                        DuplicateRecordFields,
+                        NoFieldSelectors,
+                        StrictData,
+                        OverloadedRecordDot,
+                        AllowAmbiguousTypes,
+                        DataKinds,
+                        TypeFamilies,
+                        RecordWildCards,
+                        DeriveDataTypeable,
+                        LambdaCase
+
+library
+    import:           warnings
+    import:           extensions
+    hs-source-dirs:   lib
+    exposed-modules:  Brfteleterrassen1
+                    , Brfteleterrassen1.Models
+                    , Brfteleterrassen1.Content
+                    , Brfteleterrassen1.HTML
+                    , Brfteleterrassen1.Pages
+                    , Brfteleterrassen1.Assets
+                    , Brfteleterrassen1.Generator
+    build-depends:    base,
+                      text,
+                      directory,
+                      filepath,
+                      aeson
+    hs-source-dirs:   src
+    default-language: GHC2021
+
+executable brfteleterrassen1
+    import:           warnings
+    import:           extensions
+    main-is:          Main.hs
+    build-depends:    base,
+                      brfteleterrassen1
+    hs-source-dirs:   src
+    default-language: GHC2021
+
+test-suite brfteleterrassen1-test
+    import:           warnings
+    import:           extensions
+    type:             exitcode-stdio-1.0
+    main-is:          Main.hs
+    other-modules:    Brfteleterrassen1Spec
+    build-depends:    base,
+                      brfteleterrassen1,
+                      hspec,
+                      QuickCheck
+    hs-source-dirs:   test
+    default-language: GHC2021
+    ghc-options:      -threaded -rtsopts -with-rtsopts=-N
+
+benchmark brfteleterrassen1-bench
+    import:           warnings
+    import:           extensions
+    type:             exitcode-stdio-1.0
+    main-is:          Main.hs
+    build-depends:    base,
+                      brfteleterrassen1,
+                      criterion
+    hs-source-dirs:   bench
+    default-language: GHC2021
+    ghc-options:      -threaded -rtsopts -with-rtsopts=-N
+

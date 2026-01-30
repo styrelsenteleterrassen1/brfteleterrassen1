@@ -1,0 +1,21 @@
+{
+  "title": "Kontakt",
+  "sections": [
+    {
+      "heading": "Styrelsen",
+      "contentHtml": "E-post: <a href=\"mailto:styrelsen.teleterrassen1@gmail.com\">styrelsen.teleterrassen1@gmail.com</a>"
+    },
+    {
+      "heading": "Postadress",
+      "contentHtml": "Nordstaden<br>Storgatan 45<br>171 52 Solna"
+    },
+    {
+      "heading": "Organisationsnummer",
+      "contentHtml": "769636-0697"
+    },
+    {
+      "heading": "Förvaltare",
+      "contentHtml": "<a href=\"https://nordstaden.se/\" target=\"_blank\">Nordstaden Stockholm AB</a><br>Tel: 08-32 40 60<br>E-post: <a href=\"mailto:Kundtjanst@nordstaden.se\">Kundtjanst@nordstaden.se</a>"
+    }
+  ]
+}

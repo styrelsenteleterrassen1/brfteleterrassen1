@@ -1,0 +1,29 @@
+{
+  "documents": [
+    {
+      "type": "årsredovisning",
+      "title": "Årsredovisning 2023",
+      "file": "brf-teleterrassen-1-arsredovisning-2023.pdf"
+    },
+    {
+      "type": "årsredovisning",
+      "title": "Årsredovisning 2022",
+      "file": "brf-teleterrassen-1-arsredovisning-2022.pdf"
+    },
+    {
+      "type": "årsredovisning",
+      "title": "Årsredovisning 2021",
+      "file": "brf-teleterrassen-1-arsredovisning-2021.pdf"
+    },
+    {
+      "type": "årsredovisning",
+      "title": "Årsredovisning 2020",
+      "file": "brf-teleterrassen-1-arsredovisning-2020.pdf"
+    },
+    {
+      "type": "stadgar",
+      "title": "Föreningens stadgar",
+      "file": "stadgar.pdf"
+    }
+  ]
+}

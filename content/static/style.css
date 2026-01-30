@@ -121,6 +121,13 @@ h3 {
   letter-spacing: -0.0125em;
 }
 
+h4 {
+  font-size: 1.125rem;
+  color: #1e293b;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
 p {
   margin-bottom: 1.25rem;
   line-height: 1.75;
@@ -129,6 +136,30 @@ p {
 
 section {
   margin-bottom: 3rem;
+}
+
+/* News */
+.news-feed {
+  border-top: 1px solid #e2e8f0;
+  padding-top: 2rem;
+}
+
+.news-item {
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+}
+
+.news-item:first-of-type {
+  margin-top: 1rem;
+}
+
+.news-meta {
+  font-size: 0.9rem;
+  color: #64748b;
+  margin-bottom: 0.75rem;
 }
 
 /* Links */

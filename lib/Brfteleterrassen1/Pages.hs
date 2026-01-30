@@ -72,17 +72,32 @@ pageFooter config =
   footer_ (p_ ("© " <> config.name))
 
 -- | Generate the home page
-generateHomePage :: SiteConfig -> HomePage -> Text
-generateHomePage config page =
+generateHomePage :: SiteConfig -> HomePage -> NewsData -> Text
+generateHomePage config page newsData =
   pageLayout config "home" page.title $
     h2_ page.title
       <> T.concat (map renderSection page.sections)
+      <> renderNewsFeed newsData
   where
     renderSection sec =
       section_
         ( h3_ sec.heading
             <> p_ sec.content
         )
+
+    renderNewsFeed (NewsData items) =
+      if null items
+        then ""
+        else
+          section [("class", "news-feed")] $
+            h3_ "Nyhetsflöde"
+              <> T.concat (map renderNewsItem items)
+
+    renderNewsItem (NewsItem {title = itemTitle, date = itemDate, text = itemText, poster = itemPoster}) =
+      section [("class", "news-item")] $
+        h4_ itemTitle
+          <> p [("class", "news-meta")] ("Datum: " <> itemDate <> " • Publicerat av " <> itemPoster)
+          <> p_ itemText
 
 -- | Generate the about page
 generateAboutPage :: SiteConfig -> AboutPage -> Text

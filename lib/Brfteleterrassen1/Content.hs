@@ -37,6 +37,7 @@ loadSiteData = do
   members <- loadJSON "pages/members.json"
   brokers <- loadJSON "pages/brokers.json"
   contact <- loadJSON "pages/contact.json"
+  news <- loadJSON "news.json"
   docs <- loadJSON "documents/documents.json"
   pure
     SiteData
@@ -46,6 +47,7 @@ loadSiteData = do
         membersPage = members,
         brokersPage = brokers,
         contactPage = contact,
+        newsData = news,
         documentsData = docs
       }
 

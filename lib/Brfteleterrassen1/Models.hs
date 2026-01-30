@@ -122,6 +122,34 @@ instance FromJSON ContactPage where
       <$> v .: "title"
       <*> v .: "sections"
 
+-- | News item data
+data NewsItem = NewsItem
+  { title :: Text,
+    date :: Text,
+    text :: Text,
+    poster :: Text
+  }
+  deriving (Show)
+
+instance FromJSON NewsItem where
+  parseJSON = withObject "NewsItem" $ \v ->
+    NewsItem
+      <$> v .: "title"
+      <*> v .: "date"
+      <*> v .: "text"
+      <*> v .: "poster"
+
+-- | News collection
+newtype NewsData = NewsData
+  { news :: [NewsItem]
+  }
+  deriving (Show)
+
+instance FromJSON NewsData where
+  parseJSON = withObject "NewsData" $ \v ->
+    NewsData
+      <$> v .: "news"
+
 -- | Document type
 data DocumentType
   = Arsredovisning
@@ -176,6 +204,7 @@ data SiteData = SiteData
     membersPage :: MembersPage,
     brokersPage :: BrokersPage,
     contactPage :: ContactPage,
+    newsData :: NewsData,
     documentsData :: DocumentsData
   }
   deriving (Show)

@@ -24,6 +24,8 @@ module Brfteleterrassen1.HTML
     h2_,
     h3,
     h3_,
+    h4,
+    h4_,
     p,
     p_,
     a,
@@ -137,6 +139,12 @@ h3 = tag "h3"
 
 h3_ :: Text -> Text
 h3_ = h3 []
+
+h4 :: [(Text, Text)] -> Text -> Text
+h4 = tag "h4"
+
+h4_ :: Text -> Text
+h4_ = h4 []
 
 p :: [(Text, Text)] -> Text -> Text
 p = tag "p"

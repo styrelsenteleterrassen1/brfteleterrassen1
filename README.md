@@ -40,6 +40,7 @@ All content must be placed under the `content/` directory:
 ```
 content/
 ├── site.json                # Global site configuration
+├── news.json                # News feed items
 ├── pages/
 │   ├── home.json           # Home page content
 │   ├── about.json          # About page content
@@ -106,6 +107,21 @@ Most pages follow this structure:
 The `about.json` page has a different structure with specific fields for building information.
 
 The `contact.json` page has fields for contact details and property manager information.
+
+### News (news.json)
+
+```json
+{
+  "news": [
+    {
+      "title": "Hemsidan är live",
+      "date": "2024-09-15",
+      "text": "Hemsidan är nu lanserad. Mer information och uppdateringar kommer inom kort.",
+      "poster": "Styrelsen"
+    }
+  ]
+}
+```
 
 ### Documents (documents/documents.json)
 

@@ -41,7 +41,7 @@ generate = do
   -- Generate HTML pages
   putStrLn "Generating HTML pages..."
   writeHtmlPage "index.html" $
-    generateHomePage siteData.siteConfig siteData.homePage
+    generateHomePage siteData.siteConfig siteData.homePage siteData.newsData
   writeHtmlPage "about.html" $
     generateAboutPage siteData.siteConfig siteData.aboutPage
   writeHtmlPage "members.html" $

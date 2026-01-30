@@ -25,7 +25,7 @@ pageLayout config currentPage pageTitle content =
           ( title_ (config.name <> " - " <> pageTitle)
               <> meta [("charset", "utf-8")]
               <> meta [("name", "viewport"), ("content", "width=device-width, initial-scale=1")]
-              <> link [("rel", "stylesheet"), ("href", "/static/style.css")]
+              <> link [("rel", "stylesheet"), ("href", "static/style.css")]
           )
           <> body_
             ( pageHeader config
@@ -41,7 +41,7 @@ pageHeader config =
   header
     [("class", "site-header")]
     ( img
-        [ ("src", "/static/" <> config.headerImage),
+        [ ("src", "static/" <> config.headerImage),
           ("alt", config.name),
           ("class", "header-image")
         ]
@@ -53,12 +53,12 @@ pageNav :: Text -> Text
 pageNav current =
   nav_
     ( ul_
-        ( li_ (navLink "/" "Hem" (current == "home"))
-            <> li_ (navLink "/about.html" "Om föreningen" (current == "about"))
-            <> li_ (navLink "/members.html" "För medlemmar" (current == "members"))
-            <> li_ (navLink "/brokers.html" "För mäklare" (current == "brokers"))
-            <> li_ (navLink "/documents.html" "Dokument" (current == "documents"))
-            <> li_ (navLink "/contact.html" "Kontakt" (current == "contact"))
+        ( li_ (navLink "index.html" "Hem" (current == "home"))
+            <> li_ (navLink "about.html" "Om föreningen" (current == "about"))
+            <> li_ (navLink "members.html" "För medlemmar" (current == "members"))
+            <> li_ (navLink "brokers.html" "För mäklare" (current == "brokers"))
+            <> li_ (navLink "documents.html" "Dokument" (current == "documents"))
+            <> li_ (navLink "contact.html" "Kontakt" (current == "contact"))
         )
     )
   where
@@ -159,7 +159,7 @@ generateDocumentsPage config (DocumentsData docs) =
 
     renderDocument (Document {title = docTitle, file = docFile, year = docYear, notes = docNotes}) =
       li_
-        ( a [("href", "/documents/" <> docFile)] docTitle
+        ( a [("href", "documents/" <> docFile)] docTitle
             <> ( if isJust docYear
                    then " (" <> T.pack (show $ maybe 0 id docYear) <> ")"
                    else ""

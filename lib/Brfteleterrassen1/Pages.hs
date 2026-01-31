@@ -107,8 +107,7 @@ generateAboutPage config page =
   pageLayout config "about" page.title $
     h2_ page.title
       <> section_
-        ( dl_ (T.concat (map renderField page.fields))
-        )
+        (dl_ (T.concat (map renderField page.fields)))
   where
     renderField field =
       dt_ field.label

@@ -122,7 +122,7 @@ generateMembersPage config page =
     renderSection sec =
       section_
         ( h3_ sec.heading
-            <> p_ sec.content
+            <> p_ sec.contentHtml
         )
 
 -- | Generate the brokers page

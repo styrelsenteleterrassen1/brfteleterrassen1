@@ -73,7 +73,7 @@ instance FromJSON AboutPage where
 -- | Members page data
 data MembersPage = MembersPage
   { title :: Text,
-    sections :: [Section]
+    sections :: [HtmlSection]
   }
   deriving (Show)
 

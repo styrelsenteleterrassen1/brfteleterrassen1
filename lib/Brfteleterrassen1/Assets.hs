@@ -4,7 +4,7 @@ module Brfteleterrassen1.Assets
   )
 where
 
-import Brfteleterrassen1.Models (Document (..), DocumentsData (..))
+import Brfteleterrassen1.Models (Document (..), DocumentSection (..), DocumentsData (..))
 import Control.Exception (throwIO)
 import Data.Text qualified as T
 import System.Directory (copyFile, createDirectoryIfMissing, doesDirectoryExist, doesFileExist, listDirectory)
@@ -49,11 +49,13 @@ copyDirectoryRecursive src dst = do
 
 -- | Copy document PDFs from content/documents/ to web/documents/
 copyDocuments :: DocumentsData -> IO ()
-copyDocuments (DocumentsData docs) = do
+copyDocuments (DocumentsData {sections = docSections}) = do
   let destDir = webDir </> "documents"
   createDirectoryIfMissing True destDir
 
-  mapM_ (copyDoc destDir) docs
+  mapM_
+    (copyDoc destDir)
+    (concatMap (\DocumentSection {documents = sectionDocs} -> sectionDocs) docSections)
   where
     copyDoc destDir (Document {file = fileName}) = do
       let srcPath = contentDir </> "documents" </> T.unpack fileName

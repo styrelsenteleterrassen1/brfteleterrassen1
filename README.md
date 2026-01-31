@@ -104,7 +104,7 @@ Most pages follow this structure:
 }
 ```
 
-The `about.json` page has a different structure with specific fields for building information.
+The `about.json` page uses a single section with labeled fields to render the definition list.
 
 The `contact.json` page has fields for contact details and property manager information.
 
@@ -127,13 +127,19 @@ The `contact.json` page has fields for contact details and property manager info
 
 ```json
 {
-  "documents": [
+  "title": "Dokument",
+  "sections": [
     {
-      "type": "årsredovisning",
-      "year": 2023,
-      "title": "Årsredovisning 2023",
-      "file": "arsredovisning-2023.pdf",
-      "notes": "Optional notes"
+      "heading": "Årsredovisningar",
+      "documents": [
+        {
+          "type": "årsredovisning",
+          "year": 2023,
+          "title": "Årsredovisning 2023",
+          "file": "arsredovisning-2023.pdf",
+          "notes": "Optional notes"
+        }
+      ]
     }
   ]
 }

@@ -57,10 +57,22 @@ instance FromJSON InfoField where
       <$> v .: "label"
       <*> v .: "value"
 
+data AboutSection = AboutSection
+  { heading :: Text,
+    fields :: [InfoField]
+  }
+  deriving (Show)
+
+instance FromJSON AboutSection where
+  parseJSON = withObject "AboutSection" $ \v ->
+    AboutSection
+      <$> v .: "heading"
+      <*> v .: "fields"
+
 -- | About page data
 data AboutPage = AboutPage
   { title :: Text,
-    fields :: [InfoField]
+    sections :: [AboutSection]
   }
   deriving (Show)
 
@@ -68,7 +80,7 @@ instance FromJSON AboutPage where
   parseJSON = withObject "AboutPage" $ \v ->
     AboutPage
       <$> v .: "title"
-      <*> v .: "fields"
+      <*> v .: "sections"
 
 -- | Members page data
 data MembersPage = MembersPage
@@ -186,15 +198,29 @@ instance FromJSON Document where
       <*> v .:? "notes"
 
 -- | Documents collection
-newtype DocumentsData = DocumentsData
-  { documents :: [Document]
+data DocumentSection = DocumentSection
+  { heading :: Text,
+    documents :: [Document]
+  }
+  deriving (Show)
+
+instance FromJSON DocumentSection where
+  parseJSON = withObject "DocumentSection" $ \v ->
+    DocumentSection
+      <$> v .: "heading"
+      <*> v .: "documents"
+
+data DocumentsData = DocumentsData
+  { title :: Text,
+    sections :: [DocumentSection]
   }
   deriving (Show)
 
 instance FromJSON DocumentsData where
   parseJSON = withObject "DocumentsData" $ \v ->
     DocumentsData
-      <$> v .: "documents"
+      <$> v .: "title"
+      <*> v .: "sections"
 
 -- | Trivselregler (house rules) page data - same structure as ContactPage
 type TrivselreglerPage = ContactPage

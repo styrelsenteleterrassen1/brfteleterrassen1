@@ -55,8 +55,8 @@ loadSiteData = do
 
 -- | Validate that all referenced document files exist
 validateDocumentFiles :: DocumentsData -> IO ()
-validateDocumentFiles (DocumentsData docs) = do
-  mapM_ checkFile docs
+validateDocumentFiles (DocumentsData {sections = docSections}) = do
+  mapM_ checkFile (concatMap (\DocumentSection {documents = sectionDocs} -> sectionDocs) docSections)
   where
     checkFile (Document {file = fileName}) = do
       let filePath = contentDir </> "documents" </> T.unpack fileName

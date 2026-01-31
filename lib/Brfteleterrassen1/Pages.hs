@@ -151,9 +151,13 @@ generateAboutPage :: SiteConfig -> AboutPage -> Text
 generateAboutPage config page =
   pageLayout config "about" page.title $
     h2_ page.title
-      <> section_
-        (dl_ (T.concat (map renderField page.fields)))
+      <> T.concat (map (uncurry renderSection) (sortedSectionsWithIds (.heading) page.sections))
   where
+    renderSection sec sectionId =
+      section
+        [("id", sectionId)]
+        (dl_ (T.concat (map renderField sec.fields)))
+
     renderField field =
       dt_ field.label
         <> dd_ field.value
@@ -216,24 +220,18 @@ generateTrivselreglerPage config page =
 
 -- | Generate the documents page
 generateDocumentsPage :: SiteConfig -> DocumentsData -> Text
-generateDocumentsPage config (DocumentsData docs) =
-  pageLayout config "documents" "Dokument" $
-    h2_ "Dokument"
-      <> renderDocumentGroup "Årsredovisningar" Arsredovisning docs
-      <> renderDocumentGroup "Stadgar" Stadgar docs
-      <> renderDocumentGroup "Energideklarationer" Energideklaration docs
-      <> renderDocumentGroup "Övrigt" Ovrigt docs
+generateDocumentsPage config page =
+  pageLayout config "documents" page.title $
+    h2_ page.title
+      <> T.concat (map (uncurry renderSection) (sortedSectionsWithIds (.heading) page.sections))
   where
-    renderDocumentGroup groupTitle docType allDocs =
-      let groupDocs = filter (\(Document {docType = dtype}) -> dtype == docType) allDocs
-          sortedDocs = sortOn (Down . \(Document {year = y}) -> y) groupDocs
-       in if null groupDocs
-            then ""
-            else
-              section_
-                ( h3_ groupTitle
-                    <> ul_ (T.concat $ map renderDocument sortedDocs)
-                )
+    renderSection (DocumentSection {heading = sectionHeading, documents = sectionDocs}) sectionId =
+      let sortedDocs = sortOn (Down . (\doc -> doc.year)) sectionDocs
+       in section
+            [("id", sectionId)]
+            ( h3_ sectionHeading
+                <> ul_ (T.concat $ map renderDocument sortedDocs)
+            )
 
     renderDocument (Document {title = docTitle, file = docFile, year = docYear, notes = docNotes}) =
       li_

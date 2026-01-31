@@ -50,6 +50,8 @@ generate = do
     generateBrokersPage siteData.siteConfig siteData.brokersPage
   writeHtmlPage "contact.html" $
     generateContactPage siteData.siteConfig siteData.contactPage
+  writeHtmlPage "trivselregler.html" $
+    generateTrivselreglerPage siteData.siteConfig siteData.trivselreglerPage
   writeHtmlPage "documents.html" $
     generateDocumentsPage siteData.siteConfig siteData.documentsData
   putStrLn "HTML pages generated."

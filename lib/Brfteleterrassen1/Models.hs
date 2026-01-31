@@ -196,6 +196,9 @@ instance FromJSON DocumentsData where
     DocumentsData
       <$> v .: "documents"
 
+-- | Trivselregler (house rules) page data - same structure as ContactPage
+type TrivselreglerPage = ContactPage
+
 -- | All site data loaded from content/
 data SiteData = SiteData
   { siteConfig :: SiteConfig,
@@ -204,6 +207,7 @@ data SiteData = SiteData
     membersPage :: MembersPage,
     brokersPage :: BrokersPage,
     contactPage :: ContactPage,
+    trivselreglerPage :: TrivselreglerPage,
     newsData :: NewsData,
     documentsData :: DocumentsData
   }

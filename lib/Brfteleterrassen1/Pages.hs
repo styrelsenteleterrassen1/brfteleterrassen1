@@ -4,6 +4,7 @@ module Brfteleterrassen1.Pages
     generateMembersPage,
     generateBrokersPage,
     generateContactPage,
+    generateTrivselreglerPage,
     generateDocumentsPage,
   )
 where
@@ -56,6 +57,7 @@ pageNav current =
         ( li_ (navLink "index.html" "Hem" (current == "home"))
             <> li_ (navLink "about.html" "Om föreningen" (current == "about"))
             <> li_ (navLink "members.html" "För medlemmar" (current == "members"))
+            <> li_ (navLink "trivselregler.html" "Trivselregler" (current == "trivselregler"))
             <> li_ (navLink "brokers.html" "För mäklare" (current == "brokers"))
             <> li_ (navLink "documents.html" "Dokument" (current == "documents"))
             <> li_ (navLink "contact.html" "Kontakt" (current == "contact"))
@@ -142,6 +144,19 @@ generateBrokersPage config page =
 generateContactPage :: SiteConfig -> ContactPage -> Text
 generateContactPage config page =
   pageLayout config "contact" page.title $
+    h2_ page.title
+      <> T.concat (map renderSection page.sections)
+  where
+    renderSection sec =
+      section_
+        ( h3_ sec.heading
+            <> div_ sec.contentHtml
+        )
+
+-- | Generate the trivselregler (house rules) page
+generateTrivselreglerPage :: SiteConfig -> ContactPage -> Text
+generateTrivselreglerPage config page =
+  pageLayout config "trivselregler" page.title $
     h2_ page.title
       <> T.concat (map renderSection page.sections)
   where

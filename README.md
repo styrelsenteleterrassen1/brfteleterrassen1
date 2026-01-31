@@ -90,7 +90,7 @@ web/
 
 ### Page Content (pages/*.json)
 
-Most pages follow this structure:
+All pages use the same structure:
 
 ```json
 {
@@ -98,13 +98,12 @@ Most pages follow this structure:
   "sections": [
     {
       "heading": "Section Heading",
+      "kind": "text",
       "content": "Section content text..."
     }
   ]
 }
 ```
-
-The `about.json` page uses a single section with labeled fields to render the definition list.
 
 The `contact.json` page has fields for contact details and property manager information.
 
@@ -131,6 +130,7 @@ The `contact.json` page has fields for contact details and property manager info
   "sections": [
     {
       "heading": "Årsredovisningar",
+      "kind": "documents",
       "documents": [
         {
           "type": "årsredovisning",
@@ -144,6 +144,12 @@ The `contact.json` page has fields for contact details and property manager info
   ]
 }
 ```
+
+**Section kinds:**
+- `text` - Plain text content (use `content`)
+- `html` - Raw HTML content (use `content`)
+- `fields` - Definition list fields (use `fields`)
+- `documents` - Document lists (use `documents`)
 
 **Document types:**
 - `årsredovisning` - Annual reports

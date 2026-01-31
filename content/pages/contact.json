@@ -3,19 +3,23 @@
   "sections": [
     {
       "heading": "Styrelsen",
-      "contentHtml": "Styrelsen håller sina ordinarie möten varje månad. Medlemmar är välkomna att ta kontakt med styrelsen via e-post för frågor och synpunkter. <br><br> E-post: <a href=\"mailto:styrelsen.teleterrassen1@gmail.com\">styrelsen.teleterrassen1@gmail.com</a>"
+      "kind": "html",
+      "content": "Styrelsen håller sina ordinarie möten varje månad. Medlemmar är välkomna att ta kontakt med styrelsen via e-post för frågor och synpunkter. <br><br> E-post: <a href=\"mailto:styrelsen.teleterrassen1@gmail.com\">styrelsen.teleterrassen1@gmail.com</a>"
     },
     {
       "heading": "Styrelsens brevlåda",
-      "contentHtml": "BRF Teleterrassen 1<br>Hammarögatan 10<br>123 40 Farsta"
+      "kind": "html",
+      "content": "BRF Teleterrassen 1<br>Hammarögatan 10<br>123 40 Farsta"
     },
     {
       "heading": "Förvaltare",
-      "contentHtml": "<a href=\"https://nordstaden.se/\" target=\"_blank\">Nordstaden Stockholm AB</a><br>Tel: 08-32 40 60<br>E-post: <a href=\"mailto:Kundtjanst@nordstaden.se\">Kundtjanst@nordstaden.se</a>"
+      "kind": "html",
+      "content": "<a href=\"https://nordstaden.se/\" target=\"_blank\">Nordstaden Stockholm AB</a><br>Tel: 08-32 40 60<br>E-post: <a href=\"mailto:Kundtjanst@nordstaden.se\">Kundtjanst@nordstaden.se</a>"
     },
     {
       "heading": "Förvaltarens postadress",
-      "contentHtml": "Nordstaden<br>Storgatan 45<br>171 52 Solna"
+      "kind": "html",
+      "content": "Nordstaden<br>Storgatan 45<br>171 52 Solna"
     }
   ]
 }

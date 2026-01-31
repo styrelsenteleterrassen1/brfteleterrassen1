@@ -50,14 +50,18 @@ loadSiteData = do
         contactPage = contact,
         trivselreglerPage = trivselregler,
         newsData = news,
-        documentsData = docs
+        documentsPage = docs
       }
 
 -- | Validate that all referenced document files exist
-validateDocumentFiles :: DocumentsData -> IO ()
-validateDocumentFiles (DocumentsData {sections = docSections}) = do
-  mapM_ checkFile (concatMap (\DocumentSection {documents = sectionDocs} -> sectionDocs) docSections)
+validateDocumentFiles :: Page -> IO ()
+validateDocumentFiles page = do
+  mapM_ checkFile (documentsFromPage page)
   where
+    documentsFromPage Page {sections = pageSections} =
+      concatMap sectionDocuments pageSections
+    sectionDocuments Section {content = DocumentsContent docs} = docs
+    sectionDocuments _ = []
     checkFile (Document {file = fileName}) = do
       let filePath = contentDir </> "documents" </> T.unpack fileName
       exists <- doesFileExist filePath

@@ -18,32 +18,6 @@ instance FromJSON SiteConfig where
       <*> v .: "description"
       <*> v .: "headerImage"
 
--- | A content section with heading and text
-data Section = Section
-  { heading :: Text,
-    content :: Text
-  }
-  deriving (Show)
-
-instance FromJSON Section where
-  parseJSON = withObject "Section" $ \v ->
-    Section
-      <$> v .: "heading"
-      <*> v .: "content"
-
--- | Home page data
-data HomePage = HomePage
-  { title :: Text,
-    sections :: [Section]
-  }
-  deriving (Show)
-
-instance FromJSON HomePage where
-  parseJSON = withObject "HomePage" $ \v ->
-    HomePage
-      <$> v .: "title"
-      <*> v .: "sections"
-
 -- | A labeled field for displaying key-value information
 data InfoField = InfoField
   { label :: Text,
@@ -57,82 +31,20 @@ instance FromJSON InfoField where
       <$> v .: "label"
       <*> v .: "value"
 
-data AboutSection = AboutSection
-  { heading :: Text,
-    fields :: [InfoField]
-  }
-  deriving (Show)
+data SectionKind
+  = TextKind
+  | HtmlKind
+  | FieldsKind
+  | DocumentsKind
+  deriving (Show, Eq)
 
-instance FromJSON AboutSection where
-  parseJSON = withObject "AboutSection" $ \v ->
-    AboutSection
-      <$> v .: "heading"
-      <*> v .: "fields"
-
--- | About page data
-data AboutPage = AboutPage
-  { title :: Text,
-    sections :: [AboutSection]
-  }
-  deriving (Show)
-
-instance FromJSON AboutPage where
-  parseJSON = withObject "AboutPage" $ \v ->
-    AboutPage
-      <$> v .: "title"
-      <*> v .: "sections"
-
--- | Members page data
-data MembersPage = MembersPage
-  { title :: Text,
-    sections :: [HtmlSection]
-  }
-  deriving (Show)
-
-instance FromJSON MembersPage where
-  parseJSON = withObject "MembersPage" $ \v ->
-    MembersPage
-      <$> v .: "title"
-      <*> v .: "sections"
-
--- | Brokers page data
-data BrokersPage = BrokersPage
-  { title :: Text,
-    sections :: [Section]
-  }
-  deriving (Show)
-
-instance FromJSON BrokersPage where
-  parseJSON = withObject "BrokersPage" $ \v ->
-    BrokersPage
-      <$> v .: "title"
-      <*> v .: "sections"
-
--- | A content section with heading and raw HTML content
-data HtmlSection = HtmlSection
-  { heading :: Text,
-    contentHtml :: Text
-  }
-  deriving (Show)
-
-instance FromJSON HtmlSection where
-  parseJSON = withObject "HtmlSection" $ \v ->
-    HtmlSection
-      <$> v .: "heading"
-      <*> v .: "contentHtml"
-
--- | Contact page data
-data ContactPage = ContactPage
-  { title :: Text,
-    sections :: [HtmlSection]
-  }
-  deriving (Show)
-
-instance FromJSON ContactPage where
-  parseJSON = withObject "ContactPage" $ \v ->
-    ContactPage
-      <$> v .: "title"
-      <*> v .: "sections"
+instance FromJSON SectionKind where
+  parseJSON = withText "SectionKind" $ \case
+    "text" -> pure TextKind
+    "html" -> pure HtmlKind
+    "fields" -> pure FieldsKind
+    "documents" -> pure DocumentsKind
+    other -> fail $ "Unknown section kind: " <> show other
 
 -- | News item data
 data NewsItem = NewsItem
@@ -197,44 +109,52 @@ instance FromJSON Document where
       <*> v .: "file"
       <*> v .:? "notes"
 
--- | Documents collection
-data DocumentSection = DocumentSection
+data SectionContent
+  = TextContent Text
+  | HtmlContent Text
+  | FieldsContent [InfoField]
+  | DocumentsContent [Document]
+  deriving (Show)
+
+data Section = Section
   { heading :: Text,
-    documents :: [Document]
+    content :: SectionContent
   }
   deriving (Show)
 
-instance FromJSON DocumentSection where
-  parseJSON = withObject "DocumentSection" $ \v ->
-    DocumentSection
-      <$> v .: "heading"
-      <*> v .: "documents"
+instance FromJSON Section where
+  parseJSON = withObject "Section" $ \v -> do
+    heading <- v .: "heading"
+    kind <- v .: "kind"
+    content <- case kind of
+      TextKind -> TextContent <$> v .: "content"
+      HtmlKind -> HtmlContent <$> v .: "content"
+      FieldsKind -> FieldsContent <$> v .: "fields"
+      DocumentsKind -> DocumentsContent <$> v .: "documents"
+    pure Section {heading, content}
 
-data DocumentsData = DocumentsData
+data Page = Page
   { title :: Text,
-    sections :: [DocumentSection]
+    sections :: [Section]
   }
   deriving (Show)
 
-instance FromJSON DocumentsData where
-  parseJSON = withObject "DocumentsData" $ \v ->
-    DocumentsData
+instance FromJSON Page where
+  parseJSON = withObject "Page" $ \v ->
+    Page
       <$> v .: "title"
       <*> v .: "sections"
-
--- | Trivselregler (house rules) page data - same structure as ContactPage
-type TrivselreglerPage = ContactPage
 
 -- | All site data loaded from content/
 data SiteData = SiteData
   { siteConfig :: SiteConfig,
-    homePage :: HomePage,
-    aboutPage :: AboutPage,
-    membersPage :: MembersPage,
-    brokersPage :: BrokersPage,
-    contactPage :: ContactPage,
-    trivselreglerPage :: TrivselreglerPage,
+    homePage :: Page,
+    aboutPage :: Page,
+    membersPage :: Page,
+    brokersPage :: Page,
+    contactPage :: Page,
+    trivselreglerPage :: Page,
     newsData :: NewsData,
-    documentsData :: DocumentsData
+    documentsPage :: Page
   }
   deriving (Show)

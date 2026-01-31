@@ -29,7 +29,7 @@ generate = do
 
   -- Validate that all referenced files exist
   putStrLn "Validating document files..."
-  validateDocumentFiles siteData.documentsData
+  validateDocumentFiles siteData.documentsPage
   putStrLn "All document files validated."
   putStrLn ""
 
@@ -53,7 +53,7 @@ generate = do
   writeHtmlPage "trivselregler.html" $
     generateTrivselreglerPage siteData.siteConfig siteData.trivselreglerPage
   writeHtmlPage "documents.html" $
-    generateDocumentsPage siteData.siteConfig siteData.documentsData
+    generateDocumentsPage siteData.siteConfig siteData.documentsPage
   putStrLn "HTML pages generated."
   putStrLn ""
 
@@ -65,7 +65,7 @@ generate = do
 
   -- Copy documents
   putStrLn "Copying documents..."
-  copyDocuments siteData.documentsData
+  copyDocuments siteData.documentsPage
   putStrLn "Documents copied."
   putStrLn ""
 

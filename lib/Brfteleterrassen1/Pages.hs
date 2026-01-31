@@ -117,21 +117,72 @@ pageFooter :: SiteConfig -> Text
 pageFooter config =
   footer_ (p_ ("© " <> config.name))
 
+renderSectionHeading :: Text -> Text
+renderSectionHeading heading =
+  if T.null heading then "" else h3_ heading
+
+renderFields :: [InfoField] -> Text
+renderFields fields =
+  dl_ (T.concat (map renderField fields))
+  where
+    renderField field =
+      dt_ field.label
+        <> dd_ field.value
+
+renderDocuments :: [Document] -> Text
+renderDocuments docs =
+  let sortedDocs = sortOn (Down . (\doc -> doc.year)) docs
+   in ul_ (T.concat $ map renderDocument sortedDocs)
+  where
+    renderDocument (Document {title = docTitle, file = docFile, year = docYear, notes = docNotes}) =
+      li_
+        ( a [("href", "documents/" <> docFile)] docTitle
+            <> ( if isJust docYear
+                   then " (" <> T.pack (show $ maybe 0 id docYear) <> ")"
+                   else ""
+               )
+            <> T.concat (maybeToList (fmap renderNotes docNotes))
+        )
+
+    renderNotes notes = " - " <> notes
+
+renderSection :: Section -> Text -> Text
+renderSection (Section {heading = sectionHeading, content = sectionContent}) sectionId =
+  case sectionContent of
+    TextContent textContent ->
+      section
+        [("id", sectionId)]
+        ( renderSectionHeading sectionHeading
+            <> p_ textContent
+        )
+    HtmlContent htmlContent ->
+      section
+        [("id", sectionId)]
+        ( renderSectionHeading sectionHeading
+            <> div_ htmlContent
+        )
+    FieldsContent fields ->
+      section
+        [("id", sectionId)]
+        (renderFields fields)
+    DocumentsContent docs ->
+      if null docs
+        then ""
+        else
+          section
+            [("id", sectionId)]
+            ( renderSectionHeading sectionHeading
+                <> renderDocuments docs
+            )
+
 -- | Generate the home page
-generateHomePage :: SiteConfig -> HomePage -> NewsData -> Text
+generateHomePage :: SiteConfig -> Page -> NewsData -> Text
 generateHomePage config page newsData =
   pageLayout config "home" page.title $
     h2_ page.title
       <> T.concat (map (uncurry renderSection) (sortedSectionsWithIds (.heading) page.sections))
       <> renderNewsFeed newsData
   where
-    renderSection sec sectionId =
-      section
-        [("id", sectionId)]
-        ( h3_ sec.heading
-            <> p_ sec.content
-        )
-
     renderNewsFeed (NewsData items) =
       if null items
         then ""
@@ -147,100 +198,43 @@ generateHomePage config page newsData =
           <> p_ itemText
 
 -- | Generate the about page
-generateAboutPage :: SiteConfig -> AboutPage -> Text
+generateAboutPage :: SiteConfig -> Page -> Text
 generateAboutPage config page =
   pageLayout config "about" page.title $
     h2_ page.title
       <> T.concat (map (uncurry renderSection) (sortedSectionsWithIds (.heading) page.sections))
-  where
-    renderSection sec sectionId =
-      section
-        [("id", sectionId)]
-        (dl_ (T.concat (map renderField sec.fields)))
-
-    renderField field =
-      dt_ field.label
-        <> dd_ field.value
 
 -- | Generate the members page
-generateMembersPage :: SiteConfig -> MembersPage -> Text
+generateMembersPage :: SiteConfig -> Page -> Text
 generateMembersPage config page =
   pageLayout config "members" page.title $
     h2_ page.title
       <> T.concat (map (uncurry renderSection) (sortedSectionsWithIds (.heading) page.sections))
-  where
-    renderSection sec sectionId =
-      section
-        [("id", sectionId)]
-        ( h3_ sec.heading
-            <> div_ sec.contentHtml
-        )
 
 -- | Generate the brokers page
-generateBrokersPage :: SiteConfig -> BrokersPage -> Text
+generateBrokersPage :: SiteConfig -> Page -> Text
 generateBrokersPage config page =
   pageLayout config "brokers" page.title $
     h2_ page.title
       <> T.concat (map (uncurry renderSection) (sortedSectionsWithIds (.heading) page.sections))
-  where
-    renderSection sec sectionId =
-      section
-        [("id", sectionId)]
-        ( h3_ sec.heading
-            <> p_ sec.content
-        )
 
 -- | Generate the contact page
-generateContactPage :: SiteConfig -> ContactPage -> Text
+generateContactPage :: SiteConfig -> Page -> Text
 generateContactPage config page =
   pageLayout config "contact" page.title $
     h2_ page.title
       <> T.concat (map (uncurry renderSection) (sortedSectionsWithIds (.heading) page.sections))
-  where
-    renderSection sec sectionId =
-      section
-        [("id", sectionId)]
-        ( h3_ sec.heading
-            <> div_ sec.contentHtml
-        )
 
 -- | Generate the trivselregler (house rules) page
-generateTrivselreglerPage :: SiteConfig -> ContactPage -> Text
+generateTrivselreglerPage :: SiteConfig -> Page -> Text
 generateTrivselreglerPage config page =
   pageLayout config "trivselregler" page.title $
     h2_ page.title
       <> T.concat (map (uncurry renderSection) (sortedSectionsWithIds (.heading) page.sections))
-  where
-    renderSection sec sectionId =
-      section
-        [("id", sectionId)]
-        ( h3_ sec.heading
-            <> div_ sec.contentHtml
-        )
 
 -- | Generate the documents page
-generateDocumentsPage :: SiteConfig -> DocumentsData -> Text
+generateDocumentsPage :: SiteConfig -> Page -> Text
 generateDocumentsPage config page =
   pageLayout config "documents" page.title $
     h2_ page.title
       <> T.concat (map (uncurry renderSection) (sortedSectionsWithIds (.heading) page.sections))
-  where
-    renderSection (DocumentSection {heading = sectionHeading, documents = sectionDocs}) sectionId =
-      let sortedDocs = sortOn (Down . (\doc -> doc.year)) sectionDocs
-       in section
-            [("id", sectionId)]
-            ( h3_ sectionHeading
-                <> ul_ (T.concat $ map renderDocument sortedDocs)
-            )
-
-    renderDocument (Document {title = docTitle, file = docFile, year = docYear, notes = docNotes}) =
-      li_
-        ( a [("href", "documents/" <> docFile)] docTitle
-            <> ( if isJust docYear
-                   then " (" <> T.pack (show $ maybe 0 id docYear) <> ")"
-                   else ""
-               )
-            <> T.concat (maybeToList (fmap renderNotes docNotes))
-        )
-
-    renderNotes notes = " - " <> notes

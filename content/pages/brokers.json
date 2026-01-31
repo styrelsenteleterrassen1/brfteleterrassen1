@@ -3,14 +3,17 @@
   "sections": [
     {
       "heading": "Försäljning av bostadsrätt",
+      "kind": "text",
       "content": "Vid försäljning av bostadsrätt i föreningen krävs styrelsens godkännande enligt stadgarna. Kontakta styrelsen för mer information."
     },
     {
       "heading": "Ekonomisk information",
+      "kind": "text",
       "content": "Ekonomiska uppgifter och årsredovisningar finns tillgängliga under fliken <a href=\"documents.html\">Dokument</a>. För ytterligare frågor, kontakta styrelsen."
     },
     {
       "heading": "Stadgar och övrigt",
+      "kind": "text",
       "content": "Föreningens stadgar och andra viktiga dokument finns under fliken <a href=\"documents.html\">Dokument</a>."
     }
   ]

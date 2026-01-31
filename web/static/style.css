@@ -158,14 +158,16 @@ main > section:last-of-type {
 
 .news-item {
   margin-top: 1.5rem;
-  padding: 1.5rem;
-  border-radius: 12px;
-  border: 1px solid #e2e8f0;
-  background: #f8fafc;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #e2e8f0;
 }
 
 .news-item:first-of-type {
   margin-top: 1rem;
+}
+
+.news-item:last-of-type {
+  border-bottom: 0;
 }
 
 .news-meta {

@@ -14,12 +14,28 @@
       "contentHtml": "Nordstaden<br>Storgatan 45<br>171 52 Solna"
     },
     {
-      "heading": "Organisationsnummer",
-      "contentHtml": "769636-0697"
-    },
-    {
       "heading": "Förvaltare",
       "contentHtml": "<a href=\"https://nordstaden.se/\" target=\"_blank\">Nordstaden Stockholm AB</a><br>Tel: 08-32 40 60<br>E-post: <a href=\"mailto:Kundtjanst@nordstaden.se\">Kundtjanst@nordstaden.se</a>"
+    },
+    {
+      "heading": "Teknisk förvaltning",
+      "contentHtml": "Frågor om fastighetens drift och skötsel, avseende alla delar som inte är din lägenhet samt frågor gällande inomhusklimat i din lägenhet.<br>Det kan till exempel vara trapphusstädning, byte av namnskyltar eller temperatur i lägenheten.<br><br><strong>Nordstaden</strong><br>Tel: 08-32 40 60<br>E-post: <a href=\"mailto:kundtjanst@nordstaden.se\">kundtjanst@nordstaden.se</a><br>Felanmälan: <a href=\"https://www.nordstaden.se/felanmalan\" target=\"_blank\">https://www.nordstaden.se/felanmalan</a>"
+    },
+    {
+      "heading": "Ekonomisk förvaltning – Nordstaden",
+      "contentHtml": "Frågor om avgiftsavier och löpande betalningar.<br><br>Telefon: 08-587 801 50<br>Vardagar: 7.00–16.00<br>Lunchstängt: 11.30–12.30<br>E-post: <a href=\"mailto:avi@nordstaden.se\">avi@nordstaden.se</a>"
+    },
+    {
+      "heading": "Felanmälan Hiss",
+      "contentHtml": "<strong>Kone</strong><br>Tel: 0771-50 00 00<br>Tillgänglighet: dygnet runt"
+    },
+    {
+      "heading": "Peab Bostad Kundcenter",
+      "contentHtml": "För garantifrågor inom lägenheten och för att komma i kontakt med Peab Bostad, registrera ditt ärende på:<br><a href=\"https://peabbostad.se/kontakt/kundservice\" target=\"_blank\">https://peabbostad.se/kontakt/kundservice</a><br><br>Telefon: 0101-500 430<br>Vardagar: 08.00–16.00"
+    },
+    {
+      "heading": "Fastighetsjour",
+      "contentHtml": "Akuta ärenden utanför ordinarie kontorstid.<br><br><strong>Securitas</strong><br>Tel: 08-657 77 50<br><br><strong>OBS!</strong> Endast vid akuta fel, annars kan den som anmäler komma att debiteras kostnad för utryckning och åtgärd."
     }
   ]
 }

@@ -1,6 +1,8 @@
 {
   "title": "Om föreningen",
   "fields": [
+    { "label": "Namn", "value": "Bostadsrättsföreningen Teleterrassen 1" },
+    { "label": "Organisationsnummer", "value": "769636-0697" },
     { "label": "Byggår", "value": "2021" },
     { "label": "Antal lägenheter", "value": "73" },
     { "label": "Boarea bostadsrätter", "value": "4288 kvm" },

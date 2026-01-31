@@ -24,6 +24,16 @@
       "type": "stadgar",
       "title": "Föreningens stadgar",
       "file": "stadgar.pdf"
+    },
+    {
+      "type": "energideklaration",
+      "title": "Hammarögatan 6, 8 och 10",
+      "file": "Energideklaration-6-8-10.pdf"
+    },
+    {
+      "type": "energideklaration",
+      "title": "Hammarögatan 7",
+      "file": "Energideklaration-7.pdf"
     }
   ]
 }

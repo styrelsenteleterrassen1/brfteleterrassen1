@@ -117,14 +117,14 @@ data SectionContent
   deriving (Show)
 
 data Section = Section
-  { heading :: Text,
+  { heading :: Maybe Text,
     content :: SectionContent
   }
   deriving (Show)
 
 instance FromJSON Section where
   parseJSON = withObject "Section" $ \v -> do
-    heading <- v .: "heading"
+    heading <- v .:? "heading"
     kind <- v .: "kind"
     content <- case kind of
       TextKind -> TextContent <$> v .: "content"

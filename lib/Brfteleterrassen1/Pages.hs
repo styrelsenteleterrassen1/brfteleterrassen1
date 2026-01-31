@@ -18,6 +18,9 @@ import Data.Ord (Down (..))
 import Data.Text (Text)
 import Data.Text qualified as T
 
+sectionHeadingText :: Maybe Text -> Text
+sectionHeadingText = maybe "" id
+
 sortedSectionsWithIds :: (entry -> Text) -> [entry] -> [(entry, Text)]
 sortedSectionsWithIds getHeading sections =
   let sortedSections = sortOn (T.toCaseFold . getHeading) sections
@@ -148,30 +151,35 @@ renderDocuments docs =
 
 renderSection :: Section -> Text -> Text
 renderSection (Section {heading = sectionHeading, content = sectionContent}) sectionId =
+  let headingText = sectionHeadingText sectionHeading
+      headingMarkup = renderSectionHeading headingText
+   in
   case sectionContent of
     TextContent textContent ->
       section
         [("id", sectionId)]
-        ( renderSectionHeading sectionHeading
+        ( headingMarkup
             <> p_ textContent
         )
     HtmlContent htmlContent ->
       section
         [("id", sectionId)]
-        ( renderSectionHeading sectionHeading
+        ( headingMarkup
             <> div_ htmlContent
         )
     FieldsContent fields ->
       section
         [("id", sectionId)]
-        (renderFields fields)
+        ( headingMarkup
+            <> renderFields fields
+        )
     DocumentsContent docs ->
       if null docs
         then ""
         else
           section
             [("id", sectionId)]
-            ( renderSectionHeading sectionHeading
+            ( headingMarkup
                 <> renderDocuments docs
             )
 
@@ -180,7 +188,7 @@ generateHomePage :: SiteConfig -> Page -> NewsData -> Text
 generateHomePage config page newsData =
   pageLayout config "home" page.title $
     h2_ page.title
-      <> T.concat (map (uncurry renderSection) (sortedSectionsWithIds (.heading) page.sections))
+      <> T.concat (map (uncurry renderSection) (sortedSectionsWithIds (sectionHeadingText . (.heading)) page.sections))
       <> renderNewsFeed newsData
   where
     renderNewsFeed (NewsData items) =
@@ -202,39 +210,39 @@ generateAboutPage :: SiteConfig -> Page -> Text
 generateAboutPage config page =
   pageLayout config "about" page.title $
     h2_ page.title
-      <> T.concat (map (uncurry renderSection) (sortedSectionsWithIds (.heading) page.sections))
+      <> T.concat (map (uncurry renderSection) (sortedSectionsWithIds (sectionHeadingText . (.heading)) page.sections))
 
 -- | Generate the members page
 generateMembersPage :: SiteConfig -> Page -> Text
 generateMembersPage config page =
   pageLayout config "members" page.title $
     h2_ page.title
-      <> T.concat (map (uncurry renderSection) (sortedSectionsWithIds (.heading) page.sections))
+      <> T.concat (map (uncurry renderSection) (sortedSectionsWithIds (sectionHeadingText . (.heading)) page.sections))
 
 -- | Generate the brokers page
 generateBrokersPage :: SiteConfig -> Page -> Text
 generateBrokersPage config page =
   pageLayout config "brokers" page.title $
     h2_ page.title
-      <> T.concat (map (uncurry renderSection) (sortedSectionsWithIds (.heading) page.sections))
+      <> T.concat (map (uncurry renderSection) (sortedSectionsWithIds (sectionHeadingText . (.heading)) page.sections))
 
 -- | Generate the contact page
 generateContactPage :: SiteConfig -> Page -> Text
 generateContactPage config page =
   pageLayout config "contact" page.title $
     h2_ page.title
-      <> T.concat (map (uncurry renderSection) (sortedSectionsWithIds (.heading) page.sections))
+      <> T.concat (map (uncurry renderSection) (sortedSectionsWithIds (sectionHeadingText . (.heading)) page.sections))
 
 -- | Generate the trivselregler (house rules) page
 generateTrivselreglerPage :: SiteConfig -> Page -> Text
 generateTrivselreglerPage config page =
   pageLayout config "trivselregler" page.title $
     h2_ page.title
-      <> T.concat (map (uncurry renderSection) (sortedSectionsWithIds (.heading) page.sections))
+      <> T.concat (map (uncurry renderSection) (sortedSectionsWithIds (sectionHeadingText . (.heading)) page.sections))
 
 -- | Generate the documents page
 generateDocumentsPage :: SiteConfig -> Page -> Text
 generateDocumentsPage config page =
   pageLayout config "documents" page.title $
     h2_ page.title
-      <> T.concat (map (uncurry renderSection) (sortedSectionsWithIds (.heading) page.sections))
+      <> T.concat (map (uncurry renderSection) (sortedSectionsWithIds (sectionHeadingText . (.heading)) page.sections))

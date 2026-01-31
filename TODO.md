@@ -1,4 +1,12 @@
-[ ] Ordningsregler
-[x] Länk till PHM Digital
-[x] Länk till Boappa
-[x] Information om brevlåda i port 10
+- [ ] Lägg till full adress + karta/vägbeskrivning
+- [ ] Lägg till fastighetsfakta: fastighetsbeteckning, byggnadstyp, energiklass, uppvärmning/ventilation, TV/bredband, parkering/garage/EV-laddning, förråd, hissar, gemensamma utrymmen
+- [ ] Utöka mäklarinfo: månadsavgift, avgiftsförändringar, lån/kvm, pantsättnings- och överlåtelseavgift, delat ägande, juridisk person, andrahandsuthyrning, underhållsplan
+- [ ] Utöka boendeinfo: felanmälan (jour/akut), skadedjursavtal, nycklar, städ/snöröjning, OVK, renoveringsrutiner + blanketter
+- [ ] Lägg till inflytt/utflytt-guide med checklista
+- [ ] Lägg till FAQ (andrahandsuthyrning, renoveringar, störningar, försäkring)
+- [ ] Lägg till nyheter + kalender (städdagar, stämmor, planerade avstängningar)
+- [ ] Dokumentbibliotek: energideklaration, underhållsplan, försäkring, trivselregler som PDF, stämmoprotokoll, policyer (andrahandsuthyrning, renovering)
+- [ ] Visa "senast uppdaterad" per sida/dokument
+- [ ] Kontakt: separata kontaktvägar för felanmälan/jour och styrelseärenden
+- [ ] Kontakt: ange styrelsefunktioner (ordf/kassor/sekreterare) utan namn om önskat
+- [ ] Tydligare konkreta instruktioner i boendeinfo (soprum/atervinning/grovsopor)

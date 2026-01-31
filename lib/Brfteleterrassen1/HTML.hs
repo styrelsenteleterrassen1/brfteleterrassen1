@@ -18,6 +18,7 @@ module Brfteleterrassen1.HTML
     section_,
     footer,
     footer_,
+    div_,
     h1,
     h1_,
     h2,
@@ -121,6 +122,9 @@ footer = tag "footer"
 
 footer_ :: Text -> Text
 footer_ = footer []
+
+div_ :: Text -> Text
+div_ = tag "div" []
 
 h1 :: [(Text, Text)] -> Text -> Text
 h1 = tag "h1"

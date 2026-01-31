@@ -122,7 +122,7 @@ generateMembersPage config page =
     renderSection sec =
       section_
         ( h3_ sec.heading
-            <> p_ sec.contentHtml
+            <> div_ sec.contentHtml
         )
 
 -- | Generate the brokers page
@@ -148,7 +148,7 @@ generateContactPage config page =
     renderSection sec =
       section_
         ( h3_ sec.heading
-            <> p_ sec.contentHtml
+            <> div_ sec.contentHtml
         )
 
 -- | Generate the documents page

@@ -4,7 +4,7 @@
     { "label": "Byggår", "value": "2021" },
     { "label": "Antal lägenheter", "value": "73" },
     { "label": "Boarea bostadsrätter", "value": "4288 kvm" },
-    { "label": "Tomträtt/äganderätt", "value": "Markrätt" },
+    { "label": "Tomträtt/Äganderätt", "value": "Äganderätt" },
     { "label": "Äkta förening", "value": "Ja" },
     { "label": "Försäkring", "value": "Försäkrad via Folksam" },
     { "label": "Förvaltare", "value": "<a href=\"https://nordstaden.se/\" target=\"_blank\">Nordstaden Stockholm AB</a>" }

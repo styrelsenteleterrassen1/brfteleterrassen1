@@ -5,8 +5,5 @@
 - [ ] Lägg till inflytt/utflytt-guide med checklista
 - [ ] Lägg till FAQ (andrahandsuthyrning, renoveringar, störningar, försäkring)
 - [ ] Lägg till nyheter + kalender (städdagar, stämmor, planerade avstängningar)
-- [ ] Dokumentbibliotek: underhållsplan, försäkring, trivselregler som PDF, stämmoprotokoll, policyer (andrahandsuthyrning, renovering)
+- [ ] Dokumentbibliotek: underhållsplan, försäkring, stämmoprotokoll, policyer (andrahandsuthyrning, renovering)
 - [ ] Visa "senast uppdaterad" per sida/dokument
-- [ ] Kontakt: separata kontaktvägar för felanmälan/jour och styrelseärenden
-- [ ] Kontakt: ange styrelsefunktioner (ordf/kassor/sekreterare) utan namn om önskat
-- [ ] Tydligare konkreta instruktioner i boendeinfo (soprum/atervinning/grovsopor)

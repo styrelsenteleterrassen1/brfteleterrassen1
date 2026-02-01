@@ -181,6 +181,10 @@ nav a.active {
   border: 0;
 }
 
+section[id] {
+  scroll-margin-top: 4.5rem;
+}
+
 /* Main content */
 main {
   padding: 3rem 2rem;

@@ -105,7 +105,8 @@ pageLayout config navItems searchEntries currentPage pageTitle content =
           )
           <> body_
             ( pageHeader config
-                <> pageNav navItems currentPage searchEntries
+                <> pageNav navItems currentPage
+                <> pageSearch searchEntries
                 <> main_ content
                 <> pageFooter config
                 <> searchScript searchEntries
@@ -126,16 +127,11 @@ pageHeader config =
     )
 
 -- | Generate the navigation menu
-pageNav :: [NavItem] -> Text -> [SearchEntry] -> Text
-pageNav navItems current searchEntries =
+pageNav :: [NavItem] -> Text -> Text
+pageNav navItems current =
   nav_
-    ( tag
-        "div"
-        [("class", "nav-inner")]
-        ( ul_
-            (T.concat (map renderNavItem navItems))
-            <> navSearch searchEntries
-        )
+    ( ul_
+        (T.concat (map renderNavItem navItems))
     )
   where
     renderNavItem item =
@@ -143,36 +139,38 @@ pageNav navItems current searchEntries =
     navLink href label isActive =
       let attrs = if isActive then [("href", href), ("class", "active")] else [("href", href)]
        in a attrs (escapeHtml label)
-    navSearch entries
-      | null entries = ""
-      | otherwise =
-          tag
-            "div"
-            [("class", "nav-search")]
-            ( tag
-                "label"
-                [("class", "sr-only"), ("for", "site-search")]
-                "Sok i rubriker"
-                <> tag_
-                  "input"
-                  [ ("id", "site-search"),
-                    ("type", "search"),
-                    ("placeholder", "Sok i rubriker"),
-                    ("autocomplete", "off"),
-                    ("class", "nav-search-input"),
-                    ("data-search-input", "true"),
-                    ("aria-controls", "site-search-results"),
-                    ("aria-expanded", "false"),
-                    ("aria-autocomplete", "list")
-                  ]
-                <> ul
-                  [ ("id", "site-search-results"),
-                    ("class", "nav-search-results"),
-                    ("data-search-results", "true"),
-                    ("aria-live", "polite")
-                  ]
-                  ""
-            )
+
+pageSearch :: [SearchEntry] -> Text
+pageSearch entries
+  | null entries = ""
+  | otherwise =
+      tag
+        "div"
+        [("class", "nav-search")]
+        ( tag
+            "label"
+            [("class", "sr-only"), ("for", "site-search")]
+            "Sok i rubriker"
+            <> tag_
+              "input"
+              [ ("id", "site-search"),
+                ("type", "search"),
+                ("placeholder", "Sok i rubriker"),
+                ("autocomplete", "off"),
+                ("class", "nav-search-input"),
+                ("data-search-input", "true"),
+                ("aria-controls", "site-search-results"),
+                ("aria-expanded", "false"),
+                ("aria-autocomplete", "list")
+              ]
+            <> ul
+              [ ("id", "site-search-results"),
+                ("class", "nav-search-results"),
+                ("data-search-results", "true"),
+                ("aria-live", "polite")
+              ]
+              ""
+        )
 
 -- | Generate the page footer
 pageFooter :: SiteConfig -> Text
@@ -381,6 +379,12 @@ searchScript entries
               "  });",
               "  document.addEventListener('click', (event) => {",
               "    if (!event.target.closest('.nav-search')) {",
+              "      results.classList.remove('is-visible');",
+              "      input.setAttribute('aria-expanded', 'false');",
+              "    }",
+              "  });",
+              "  results.addEventListener('click', (event) => {",
+              "    if (event.target.closest('a')) {",
               "      results.classList.remove('is-visible');",
               "      input.setAttribute('aria-expanded', 'false');",
               "    }",

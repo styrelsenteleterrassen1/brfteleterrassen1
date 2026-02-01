@@ -55,8 +55,8 @@ pageSearchEntries navItem page =
               sectionId = sectionId,
               sectionContent = sectionContentText sectionData.content
             }
-          | (sectionData, sectionId) <- sectionsWithIds,
-            let headingText = T.strip (sectionHeadingText sectionData.heading)
+        | (sectionData, sectionId) <- sectionsWithIds,
+          let headingText = T.strip (sectionHeadingText sectionData.heading)
         ]
    in pageEntry : sectionEntries
 
@@ -121,6 +121,7 @@ pageLayout config navItems searchEntries currentPage pageTitle content =
                 <> main_ content
                 <> pageFooter config
                 <> searchScript searchEntries
+                <> sectionLinkScript
             )
       )
 
@@ -188,9 +189,25 @@ pageFooter :: SiteConfig -> Text
 pageFooter config =
   footer_ (p_ ("© " <> config.name))
 
-renderSectionHeading :: Text -> Text
-renderSectionHeading heading =
-  if T.null heading then "" else h3_ heading
+renderSectionHeading :: Text -> Text -> Text
+renderSectionHeading heading sectionId =
+  if T.null heading
+    then ""
+    else
+      tag
+        "h3"
+        [("class", "section-heading")]
+        ( tag "span" [("class", "section-heading-text")] heading
+            <> tag
+              "button"
+              [ ("type", "button"),
+                ("class", "section-link-button"),
+                ("data-section-link", sectionId),
+                ("aria-label", "Kopiera lank till avsnittet"),
+                ("title", "Kopiera lank")
+              ]
+              "🔗"
+        )
 
 renderFields :: [InfoField] -> Text
 renderFields fields =
@@ -220,7 +237,7 @@ renderDocuments docs =
 renderSection :: Section -> Text -> Text
 renderSection (Section {heading = sectionHeading, content = sectionContent}) sectionId =
   let headingText = sectionHeadingText sectionHeading
-      headingMarkup = renderSectionHeading headingText
+      headingMarkup = renderSectionHeading headingText sectionId
    in case sectionContent of
         TextContent textContent ->
           section
@@ -441,6 +458,60 @@ searchScript entries
               "})();"
             ]
         )
+
+sectionLinkScript :: Text
+sectionLinkScript =
+  tag
+    "script"
+    []
+    ( T.intercalate
+        "\n"
+        [ "(function() {",
+          "  const buttons = document.querySelectorAll('[data-section-link]');",
+          "  if (!buttons.length) {",
+          "    return;",
+          "  }",
+          "  const copyText = (value) => {",
+          "    if (navigator.clipboard && window.isSecureContext) {",
+          "      return navigator.clipboard.writeText(value);",
+          "    }",
+          "    const textarea = document.createElement('textarea');",
+          "    textarea.value = value;",
+          "    textarea.setAttribute('readonly', '');",
+          "    textarea.style.position = 'absolute';",
+          "    textarea.style.left = '-9999px';",
+          "    document.body.appendChild(textarea);",
+          "    textarea.select();",
+          "    try {",
+          "      document.execCommand('copy');",
+          "    } finally {",
+          "      document.body.removeChild(textarea);",
+          "    }",
+          "    return Promise.resolve();",
+          "  };",
+          "  const resetLabel = (button, label) => {",
+          "    button.textContent = label;",
+          "    button.classList.remove('is-copied');",
+          "  };",
+          "  for (const button of buttons) {",
+          "    const sectionId = button.getAttribute('data-section-link');",
+          "    if (!sectionId) {",
+          "      continue;",
+          "    }",
+          "    const defaultLabel = button.textContent;",
+          "    button.addEventListener('click', () => {",
+          "      const url = new URL(window.location.href);",
+          "      url.hash = sectionId;",
+          "      copyText(url.toString()).then(() => {",
+          "        button.textContent = 'Kopierad';",
+          "        button.classList.add('is-copied');",
+          "        window.setTimeout(() => resetLabel(button, defaultLabel), 1600);",
+          "      });",
+          "    });",
+          "  }",
+          "})();"
+        ]
+    )
 
 searchEntriesJson :: [SearchEntry] -> Text
 searchEntriesJson entries =

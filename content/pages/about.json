@@ -38,6 +38,10 @@
           "value": "Försäkrad via Folksam"
         },
         {
+          "label": "Fastigheter",
+          "value": "Hammarögatan 7<br>Hammarögatan 6, 8, 10"
+        },
+        {
           "label": "Förvaltare",
           "value": "<a href=\"https://nordstaden.se/\" target=\"_blank\">Nordstaden Stockholm AB</a>"
         }
@@ -46,7 +50,7 @@
     {
       "heading": "Hitta hit",
       "kind": "html",
-      "content": "<iframe title=\"Karta till BRF Teleterrassen 1\" src=\"https://www.google.com/maps?q=59.246869,18.09986&output=embed\" width=\"100%\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>"
+      "content": "<p>Hammarögatan 6, 7, 8 och 10<br>123 40 Farsta</p><iframe title=\"Karta till BRF Teleterrassen 1\" src=\"https://www.google.com/maps?q=59.246869,18.09986&output=embed\" width=\"100%\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>"
     }
   ]
 }

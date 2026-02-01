@@ -72,6 +72,11 @@
       "content": "Cykelplatser finns i separata låsta cykelrum."
     },
     {
+      "heading": "Förråd",
+      "kind": "html",
+      "content": "Varje lägenhet som inte har ett förråd inne i lägenheten (klädkammare) har ett separat, låsbart förråd.<br><br>Styrelsen har planer att bygga ytterligare förråd."
+    },
+    {
       "heading": "Gemensamma utrymmen",
       "kind": "html",
       "content": "Cykelrum, barnvagnsrum, cykelverkstad och lekplats."

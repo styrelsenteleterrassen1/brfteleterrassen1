@@ -145,6 +145,14 @@ instance FromJSON Page where
       <$> v .: "title"
       <*> v .: "sections"
 
+-- | Navigation item for menu
+data NavItem = NavItem
+  { file :: Text,
+    pageId :: Text,
+    title :: Text
+  }
+  deriving (Show)
+
 -- | All site data loaded from content/
 data SiteData = SiteData
   { siteConfig :: SiteConfig,

@@ -5,7 +5,7 @@ where
 
 import Brfteleterrassen1.Assets (copyDocuments, copyStaticAssets)
 import Brfteleterrassen1.Content (loadSiteData, validateDocumentFiles)
-import Brfteleterrassen1.Models (SiteData (..))
+import Brfteleterrassen1.Models (NavItem (..), Page (..), SiteData (..))
 import Brfteleterrassen1.Pages
 import Data.Text (Text)
 import Data.Text.IO qualified as TIO
@@ -38,22 +38,33 @@ generate = do
   createDirectoryIfMissing True webDir
   putStrLn ""
 
+  -- Build navigation items from page titles
+  let navItems =
+        [ NavItem "index.html" "home" siteData.homePage.title,
+          NavItem "about.html" "about" siteData.aboutPage.title,
+          NavItem "members.html" "members" siteData.membersPage.title,
+          NavItem "trivselregler.html" "trivselregler" siteData.trivselreglerPage.title,
+          NavItem "brokers.html" "brokers" siteData.brokersPage.title,
+          NavItem "documents.html" "documents" siteData.documentsPage.title,
+          NavItem "contact.html" "contact" siteData.contactPage.title
+        ]
+
   -- Generate HTML pages
   putStrLn "Generating HTML pages..."
   writeHtmlPage "index.html" $
-    generateHomePage siteData.siteConfig siteData.homePage siteData.newsData
+    generateHomePage siteData.siteConfig navItems siteData.homePage siteData.newsData
   writeHtmlPage "about.html" $
-    generateAboutPage siteData.siteConfig siteData.aboutPage
+    generateAboutPage siteData.siteConfig navItems siteData.aboutPage
   writeHtmlPage "members.html" $
-    generateMembersPage siteData.siteConfig siteData.membersPage
+    generateMembersPage siteData.siteConfig navItems siteData.membersPage
   writeHtmlPage "brokers.html" $
-    generateBrokersPage siteData.siteConfig siteData.brokersPage
+    generateBrokersPage siteData.siteConfig navItems siteData.brokersPage
   writeHtmlPage "contact.html" $
-    generateContactPage siteData.siteConfig siteData.contactPage
+    generateContactPage siteData.siteConfig navItems siteData.contactPage
   writeHtmlPage "trivselregler.html" $
-    generateTrivselreglerPage siteData.siteConfig siteData.trivselreglerPage
+    generateTrivselreglerPage siteData.siteConfig navItems siteData.trivselreglerPage
   writeHtmlPage "documents.html" $
-    generateDocumentsPage siteData.siteConfig siteData.documentsPage
+    generateDocumentsPage siteData.siteConfig navItems siteData.documentsPage
   putStrLn "HTML pages generated."
   putStrLn ""
 

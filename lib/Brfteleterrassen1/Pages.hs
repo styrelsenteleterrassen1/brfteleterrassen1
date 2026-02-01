@@ -10,7 +10,7 @@ module Brfteleterrassen1.Pages
 where
 
 import Brfteleterrassen1.HTML
-import Brfteleterrassen1.Models
+import Brfteleterrassen1.Models (Document (..), InfoField (..), NavItem (..), NewsData (..), NewsItem (..), Page (..), Section (..), SectionContent (..), SiteConfig (..))
 import Data.Char (isAlphaNum, toLower)
 import Data.List (mapAccumL, sortOn)
 import Data.Maybe (isJust, maybeToList)
@@ -65,8 +65,8 @@ slugify =
     trimDashes = T.dropAround (== '-')
 
 -- | Generate the HTML page layout
-pageLayout :: SiteConfig -> Text -> Text -> Text -> Text
-pageLayout config currentPage pageTitle content =
+pageLayout :: SiteConfig -> [NavItem] -> Text -> Text -> Text -> Text
+pageLayout config navItems currentPage pageTitle content =
   doctype
     <> html_
       ( head_
@@ -77,7 +77,7 @@ pageLayout config currentPage pageTitle content =
           )
           <> body_
             ( pageHeader config
-                <> pageNav currentPage
+                <> pageNav navItems currentPage
                 <> main_ content
                 <> pageFooter config
             )
@@ -97,20 +97,15 @@ pageHeader config =
     )
 
 -- | Generate the navigation menu
-pageNav :: Text -> Text
-pageNav current =
+pageNav :: [NavItem] -> Text -> Text
+pageNav navItems current =
   nav_
     ( ul_
-        ( li_ (navLink "index.html" "Hem" (current == "home"))
-            <> li_ (navLink "about.html" "Om föreningen" (current == "about"))
-            <> li_ (navLink "members.html" "För medlemmar" (current == "members"))
-            <> li_ (navLink "trivselregler.html" "Trivselregler" (current == "trivselregler"))
-            <> li_ (navLink "brokers.html" "För mäklare" (current == "brokers"))
-            <> li_ (navLink "documents.html" "Dokument" (current == "documents"))
-            <> li_ (navLink "contact.html" "Kontakt" (current == "contact"))
-        )
+        (T.concat (map renderNavItem navItems))
     )
   where
+    renderNavItem item =
+      li_ (navLink item.file item.title (current == item.pageId))
     navLink href label isActive =
       let attrs = if isActive then [("href", href), ("class", "active")] else [("href", href)]
        in a attrs (escapeHtml label)
@@ -153,40 +148,39 @@ renderSection :: Section -> Text -> Text
 renderSection (Section {heading = sectionHeading, content = sectionContent}) sectionId =
   let headingText = sectionHeadingText sectionHeading
       headingMarkup = renderSectionHeading headingText
-   in
-  case sectionContent of
-    TextContent textContent ->
-      section
-        [("id", sectionId)]
-        ( headingMarkup
-            <> p_ textContent
-        )
-    HtmlContent htmlContent ->
-      section
-        [("id", sectionId)]
-        ( headingMarkup
-            <> div_ htmlContent
-        )
-    FieldsContent fields ->
-      section
-        [("id", sectionId)]
-        ( headingMarkup
-            <> renderFields fields
-        )
-    DocumentsContent docs ->
-      if null docs
-        then ""
-        else
+   in case sectionContent of
+        TextContent textContent ->
           section
             [("id", sectionId)]
             ( headingMarkup
-                <> renderDocuments docs
+                <> p_ textContent
             )
+        HtmlContent htmlContent ->
+          section
+            [("id", sectionId)]
+            ( headingMarkup
+                <> div_ htmlContent
+            )
+        FieldsContent fields ->
+          section
+            [("id", sectionId)]
+            ( headingMarkup
+                <> renderFields fields
+            )
+        DocumentsContent docs ->
+          if null docs
+            then ""
+            else
+              section
+                [("id", sectionId)]
+                ( headingMarkup
+                    <> renderDocuments docs
+                )
 
 -- | Generate the home page
-generateHomePage :: SiteConfig -> Page -> NewsData -> Text
-generateHomePage config page newsData =
-  pageLayout config "home" page.title $
+generateHomePage :: SiteConfig -> [NavItem] -> Page -> NewsData -> Text
+generateHomePage config navItems page newsData =
+  pageLayout config navItems "home" page.title $
     h2_ page.title
       <> T.concat (map (uncurry renderSection) (sortedSectionsWithIds (sectionHeadingText . (.heading)) page.sections))
       <> renderNewsFeed newsData
@@ -206,43 +200,43 @@ generateHomePage config page newsData =
           <> p_ itemText
 
 -- | Generate the about page
-generateAboutPage :: SiteConfig -> Page -> Text
-generateAboutPage config page =
-  pageLayout config "about" page.title $
+generateAboutPage :: SiteConfig -> [NavItem] -> Page -> Text
+generateAboutPage config navItems page =
+  pageLayout config navItems "about" page.title $
     h2_ page.title
       <> T.concat (map (uncurry renderSection) (sortedSectionsWithIds (sectionHeadingText . (.heading)) page.sections))
 
 -- | Generate the members page
-generateMembersPage :: SiteConfig -> Page -> Text
-generateMembersPage config page =
-  pageLayout config "members" page.title $
+generateMembersPage :: SiteConfig -> [NavItem] -> Page -> Text
+generateMembersPage config navItems page =
+  pageLayout config navItems "members" page.title $
     h2_ page.title
       <> T.concat (map (uncurry renderSection) (sortedSectionsWithIds (sectionHeadingText . (.heading)) page.sections))
 
 -- | Generate the brokers page
-generateBrokersPage :: SiteConfig -> Page -> Text
-generateBrokersPage config page =
-  pageLayout config "brokers" page.title $
+generateBrokersPage :: SiteConfig -> [NavItem] -> Page -> Text
+generateBrokersPage config navItems page =
+  pageLayout config navItems "brokers" page.title $
     h2_ page.title
       <> T.concat (map (uncurry renderSection) (sortedSectionsWithIds (sectionHeadingText . (.heading)) page.sections))
 
 -- | Generate the contact page
-generateContactPage :: SiteConfig -> Page -> Text
-generateContactPage config page =
-  pageLayout config "contact" page.title $
+generateContactPage :: SiteConfig -> [NavItem] -> Page -> Text
+generateContactPage config navItems page =
+  pageLayout config navItems "contact" page.title $
     h2_ page.title
       <> T.concat (map (uncurry renderSection) (sortedSectionsWithIds (sectionHeadingText . (.heading)) page.sections))
 
 -- | Generate the trivselregler (house rules) page
-generateTrivselreglerPage :: SiteConfig -> Page -> Text
-generateTrivselreglerPage config page =
-  pageLayout config "trivselregler" page.title $
+generateTrivselreglerPage :: SiteConfig -> [NavItem] -> Page -> Text
+generateTrivselreglerPage config navItems page =
+  pageLayout config navItems "trivselregler" page.title $
     h2_ page.title
       <> T.concat (map (uncurry renderSection) (sortedSectionsWithIds (sectionHeadingText . (.heading)) page.sections))
 
 -- | Generate the documents page
-generateDocumentsPage :: SiteConfig -> Page -> Text
-generateDocumentsPage config page =
-  pageLayout config "documents" page.title $
+generateDocumentsPage :: SiteConfig -> [NavItem] -> Page -> Text
+generateDocumentsPage config navItems page =
+  pageLayout config navItems "documents" page.title $
     h2_ page.title
       <> T.concat (map (uncurry renderSection) (sortedSectionsWithIds (sectionHeadingText . (.heading)) page.sections))

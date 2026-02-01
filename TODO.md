@@ -1,7 +1,8 @@
-- [ ] Lägg till fastighetsfakta: fastighetsbeteckning, byggnadstyp, energiklass, uppvärmning/ventilation, parkering/garage/EV-laddning, förråd, gemensamma utrymmen
-- [ ] Utöka mäklarinfo: månadsavgift, avgiftsförändringar, lån/kvm, pantsättnings- och överlåtelseavgift, delat ägande, juridisk person, andrahandsuthyrning, underhållsplan
-- [ ] Utöka boendeinfo: felanmälan (jour/akut), skadedjursavtal, nycklar, städ/snöröjning, OVK, renoveringsrutiner + blanketter
+- [ ] Lägg till fastighetsfakta: fastighetsbeteckning, byggnadstyp, energiklass/energiprestanda, uppvärmning/ventilation, förråd (placering)
+- [ ] Utöka mäklarinfo: månadsavgift + vad som ingår, avgiftsförändringar, lån/kvm, pantsättnings- och överlåtelseavgift, delat ägande, juridisk person, andrahandsuthyrning, underhåll/planerade åtgärder
+- [ ] Utöka boendeinfo: skadedjursavtal, nycklar/taggar, städ/snöröjning, OVK/stamspolning-status, renoveringsrutiner + blanketter
 - [ ] Lägg till inflytt/utflytt-guide med checklista
 - [ ] Lägg till FAQ (andrahandsuthyrning, renoveringar)
 - [ ] Dokumentbibliotek: underhållsplan, stämmoprotokoll, policyer (andrahandsuthyrning, renovering)
-- [ ] Parkeringsinformation
+- [ ] Parkeringsinformation: antal platser, kö/prioritering, priser, laddplatser, gästparkering
+- [ ] Kalendarium för städdagar, årsstämma och planerade arbeten

@@ -42,6 +42,14 @@
           "value": "Hammarögatan 7<br>Hammarögatan 6, 8, 10"
         },
         {
+          "label": "Byggnadstyp",
+          "value": "Flerfamiljshus"
+        },
+        {
+          "label": "Accepteras juridisk person?",
+          "value": "Nej"
+        },
+        {
           "label": "Förvaltare",
           "value": "<a href=\"https://nordstaden.se/\" target=\"_blank\">Nordstaden Stockholm AB</a>"
         }

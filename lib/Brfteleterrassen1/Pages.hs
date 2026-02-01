@@ -354,7 +354,7 @@ searchScript entries
               "        }",
               "      }",
               "      if (rank === null) {",
-              "        const headingMatch = normalize(entry.sectionHeading).includes(normalizedQuery);",
+              "        const headingMatch = normalize(entry.pageTitle + ' ' + entry.sectionHeading).includes(normalizedQuery);",
               "        if (headingMatch) {",
               "          rank = 1;",
               "        }",

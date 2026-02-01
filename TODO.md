@@ -1,4 +1,4 @@
-- [ ] Lägg till fastighetsfakta: fastighetsbeteckning, byggnadstyp, energiklass, uppvärmning/ventilation, TV/bredband, parkering/garage/EV-laddning, förråd, hissar, gemensamma utrymmen
+- [ ] Lägg till fastighetsfakta: fastighetsbeteckning, byggnadstyp, energiklass, uppvärmning/ventilation, parkering/garage/EV-laddning, förråd, gemensamma utrymmen
 - [ ] Utöka mäklarinfo: månadsavgift, avgiftsförändringar, lån/kvm, pantsättnings- och överlåtelseavgift, delat ägande, juridisk person, andrahandsuthyrning, underhållsplan
 - [ ] Utöka boendeinfo: felanmälan (jour/akut), skadedjursavtal, nycklar, städ/snöröjning, OVK, renoveringsrutiner + blanketter
 - [ ] Lägg till inflytt/utflytt-guide med checklista

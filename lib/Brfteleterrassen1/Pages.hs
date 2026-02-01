@@ -25,7 +25,8 @@ data SearchEntry = SearchEntry
   { pageTitle :: Text,
     pageFile :: Text,
     sectionHeading :: Text,
-    sectionId :: Text
+    sectionId :: Text,
+    sectionContent :: Text
   }
   deriving (Show)
 
@@ -38,16 +39,26 @@ buildSearchEntries = concatMap (uncurry pageSearchEntries)
 pageSearchEntries :: NavItem -> Page -> [SearchEntry]
 pageSearchEntries navItem page =
   let sectionsWithIds = sortedSectionsWithIds (sectionHeadingText . (.heading)) page.sections
-   in [ SearchEntry
+      pageEntry =
+        SearchEntry
           { pageTitle = navItem.title,
             pageFile = navItem.file,
-            sectionHeading = headingText,
-            sectionId = sectionId
+            sectionHeading = "",
+            sectionId = "",
+            sectionContent = ""
           }
-        | (sectionData, sectionId) <- sectionsWithIds,
-          let headingText = T.strip (sectionHeadingText sectionData.heading),
-          not (T.null headingText)
-      ]
+      sectionEntries =
+        [ SearchEntry
+            { pageTitle = navItem.title,
+              pageFile = navItem.file,
+              sectionHeading = headingText,
+              sectionId = sectionId,
+              sectionContent = sectionContentText sectionData.content
+            }
+          | (sectionData, sectionId) <- sectionsWithIds,
+            let headingText = T.strip (sectionHeadingText sectionData.heading)
+        ]
+   in pageEntry : sectionEntries
 
 sortedSectionsWithIds :: (entry -> Text) -> [entry] -> [(entry, Text)]
 sortedSectionsWithIds getHeading sections =
@@ -345,12 +356,35 @@ searchScript entries
               "    const normalizedQuery = normalize(trimmed);",
               "    const matches = [];",
               "    for (const entry of searchIndex) {",
-              "      const score = fuzzyScore(normalizedQuery, normalize(entry.sectionHeading));",
-              "      if (score !== null) {",
-              "        matches.push({ entry, score });",
+              "      const isPageEntry = entry.sectionId === '';",
+              "      let score = null;",
+              "      let rank = null;",
+              "      if (isPageEntry) {",
+              "        const pageScore = fuzzyScore(normalizedQuery, normalize(entry.pageTitle));",
+              "        if (pageScore !== null) {",
+              "          score = pageScore;",
+              "          rank = 0;",
+              "        }",
+              "      }",
+              "      if (rank === null) {",
+              "        const headingScore = fuzzyScore(normalizedQuery, normalize(entry.sectionHeading));",
+              "        if (headingScore !== null) {",
+              "          score = headingScore;",
+              "          rank = 1;",
+              "        }",
+              "      }",
+              "      if (rank === null) {",
+              "        const contentScore = fuzzyScore(normalizedQuery, normalize(entry.sectionContent));",
+              "        if (contentScore !== null) {",
+              "          score = contentScore;",
+              "          rank = 2;",
+              "        }",
+              "      }",
+              "      if (rank !== null) {",
+              "        matches.push({ entry, score, rank });",
               "      }",
               "    }",
-              "    matches.sort((a, b) => (a.score - b.score) || a.entry.sectionHeading.localeCompare(b.entry.sectionHeading, 'sv'));",
+              "    matches.sort((a, b) => (a.rank - b.rank) || (a.score - b.score) || a.entry.sectionHeading.localeCompare(b.entry.sectionHeading, 'sv'));",
               "    const limit = 8;",
               "    const toShow = matches.slice(0, limit);",
               "    if (toShow.length === 0) {",
@@ -362,8 +396,11 @@ searchScript entries
               "      for (const match of toShow) {",
               "        const item = document.createElement('li');",
               "        const link = document.createElement('a');",
-              "        link.href = match.entry.pageFile + '#' + match.entry.sectionId;",
-              "        link.textContent = match.entry.pageTitle + ' - ' + match.entry.sectionHeading;",
+              "        const anchor = match.entry.sectionId ? ('#' + match.entry.sectionId) : '';",
+              "        link.href = match.entry.pageFile + anchor;",
+              "        link.textContent = match.entry.sectionHeading",
+              "          ? (match.entry.pageTitle + ' - ' + match.entry.sectionHeading)",
+              "          : match.entry.pageTitle;",
               "        item.appendChild(link);",
               "        results.appendChild(item);",
               "      }",
@@ -408,7 +445,36 @@ renderSearchEntry entry =
     <> jsonString entry.sectionHeading
     <> ",\"sectionId\":"
     <> jsonString entry.sectionId
+    <> ",\"sectionContent\":"
+    <> jsonString entry.sectionContent
     <> "}"
+
+sectionContentText :: SectionContent -> Text
+sectionContentText sectionContent =
+  case sectionContent of
+    TextContent textContent -> textContent
+    HtmlContent htmlContent -> stripHtmlTags htmlContent
+    FieldsContent fields ->
+      T.intercalate " " (map renderField fields)
+    DocumentsContent docs ->
+      T.intercalate " " (map renderDocument docs)
+  where
+    renderField field = field.label <> " " <> field.value
+    renderDocument (Document {title = docTitle, year = docYear, notes = docNotes}) =
+      T.intercalate
+        " "
+        (docTitle : maybeToList (fmap (T.pack . show) docYear) <> maybeToList docNotes)
+
+stripHtmlTags :: Text -> Text
+stripHtmlTags =
+  T.pack . go False . T.unpack
+  where
+    go _ [] = []
+    go inTag (x : xs)
+      | x == '<' = go True xs
+      | x == '>' = go False xs
+      | inTag = go True xs
+      | otherwise = x : go False xs
 
 jsonString :: Text -> Text
 jsonString value =

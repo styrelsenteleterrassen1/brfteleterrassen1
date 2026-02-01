@@ -5,3 +5,4 @@
 - [ ] Lägg till FAQ (andrahandsuthyrning, renoveringar, störningar, försäkring)
 - [ ] Lägg till nyheter + kalender (städdagar, stämmor, planerade avstängningar)
 - [ ] Dokumentbibliotek: underhållsplan, försäkring, stämmoprotokoll, policyer (andrahandsuthyrning, renovering)
+- [ ] Parkeringsinformation

@@ -140,10 +140,9 @@ section {
 main > section {
   padding: 1rem 1.25rem;
   border-radius: 10px;
-  border: 1px solid #e2e8f0;
+  border: 0px solid #e2e8f0;
   border-left-width: 4px;
   border-left-color: #e7edf3;
-  background: rgba(248, 250, 252, 0.65);
 }
 
 main > section:last-of-type {
@@ -152,7 +151,6 @@ main > section:last-of-type {
 
 /* News */
 .news-feed {
-  border-top: 1px solid #e2e8f0;
   padding-top: 2rem;
 }
 

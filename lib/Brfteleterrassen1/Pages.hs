@@ -55,8 +55,8 @@ pageSearchEntries navItem page =
               sectionId = sectionId,
               sectionContent = sectionContentText sectionData.content
             }
-          | (sectionData, sectionId) <- sectionsWithIds,
-            let headingText = T.strip (sectionHeadingText sectionData.heading)
+        | (sectionData, sectionId) <- sectionsWithIds,
+          let headingText = T.strip (sectionHeadingText sectionData.heading)
         ]
    in pageEntry : sectionEntries
 
@@ -135,7 +135,7 @@ pageHeader config =
   header
     [("class", "site-header")]
     ( a
-        [ ("href", "/"),
+        [ ("href", "."),
           ("class", "site-header-link"),
           ("aria-label", "Hem")
         ]

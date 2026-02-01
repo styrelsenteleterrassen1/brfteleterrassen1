@@ -39,32 +39,34 @@ generate = do
   putStrLn ""
 
   -- Build navigation items from page titles
-  let navItems =
-        [ NavItem "index.html" "home" siteData.homePage.title,
-          NavItem "about.html" "about" siteData.aboutPage.title,
-          NavItem "members.html" "members" siteData.membersPage.title,
-          NavItem "trivselregler.html" "trivselregler" siteData.trivselreglerPage.title,
-          NavItem "brokers.html" "brokers" siteData.brokersPage.title,
-          NavItem "documents.html" "documents" siteData.documentsPage.title,
-          NavItem "contact.html" "contact" siteData.contactPage.title
+  let navItemsWithPages =
+        [ (NavItem "index.html" "home" siteData.homePage.title, siteData.homePage),
+          (NavItem "about.html" "about" siteData.aboutPage.title, siteData.aboutPage),
+          (NavItem "members.html" "members" siteData.membersPage.title, siteData.membersPage),
+          (NavItem "trivselregler.html" "trivselregler" siteData.trivselreglerPage.title, siteData.trivselreglerPage),
+          (NavItem "brokers.html" "brokers" siteData.brokersPage.title, siteData.brokersPage),
+          (NavItem "documents.html" "documents" siteData.documentsPage.title, siteData.documentsPage),
+          (NavItem "contact.html" "contact" siteData.contactPage.title, siteData.contactPage)
         ]
+      navItems = map fst navItemsWithPages
+      searchEntries = buildSearchEntries navItemsWithPages
 
   -- Generate HTML pages
   putStrLn "Generating HTML pages..."
   writeHtmlPage "index.html" $
-    generateHomePage siteData.siteConfig navItems siteData.homePage siteData.newsData
+    generateHomePage siteData.siteConfig navItems searchEntries siteData.homePage siteData.newsData
   writeHtmlPage "about.html" $
-    generateAboutPage siteData.siteConfig navItems siteData.aboutPage
+    generateAboutPage siteData.siteConfig navItems searchEntries siteData.aboutPage
   writeHtmlPage "members.html" $
-    generateMembersPage siteData.siteConfig navItems siteData.membersPage
+    generateMembersPage siteData.siteConfig navItems searchEntries siteData.membersPage
   writeHtmlPage "brokers.html" $
-    generateBrokersPage siteData.siteConfig navItems siteData.brokersPage
+    generateBrokersPage siteData.siteConfig navItems searchEntries siteData.brokersPage
   writeHtmlPage "contact.html" $
-    generateContactPage siteData.siteConfig navItems siteData.contactPage
+    generateContactPage siteData.siteConfig navItems searchEntries siteData.contactPage
   writeHtmlPage "trivselregler.html" $
-    generateTrivselreglerPage siteData.siteConfig navItems siteData.trivselreglerPage
+    generateTrivselreglerPage siteData.siteConfig navItems searchEntries siteData.trivselreglerPage
   writeHtmlPage "documents.html" $
-    generateDocumentsPage siteData.siteConfig navItems siteData.documentsPage
+    generateDocumentsPage siteData.siteConfig navItems searchEntries siteData.documentsPage
   putStrLn "HTML pages generated."
   putStrLn ""
 

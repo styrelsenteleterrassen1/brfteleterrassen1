@@ -8,7 +8,9 @@ import Brfteleterrassen1.Content (loadSiteData, validateDocumentFiles)
 import Brfteleterrassen1.Models (NavItem (..), Page (..), SiteData (..))
 import Brfteleterrassen1.Pages
 import Data.Text (Text)
+import Data.Text qualified as T
 import Data.Text.IO qualified as TIO
+import Data.Time (defaultTimeLocale, formatTime, getZonedTime)
 import System.Directory (createDirectoryIfMissing)
 import System.FilePath ((</>))
 
@@ -39,6 +41,7 @@ generate = do
   putStrLn ""
 
   -- Build navigation items from page titles
+  generatedAt <- formatTimestamp
   let navItemsWithPages =
         [ (NavItem "index.html" "home" siteData.homePage.title, siteData.homePage),
           (NavItem "about.html" "about" siteData.aboutPage.title, siteData.aboutPage),
@@ -54,19 +57,19 @@ generate = do
   -- Generate HTML pages
   putStrLn "Generating HTML pages..."
   writeHtmlPage "index.html" $
-    generateHomePage siteData.siteConfig navItems searchEntries siteData.homePage siteData.newsData
+    generateHomePage siteData.siteConfig generatedAt navItems searchEntries siteData.homePage siteData.newsData
   writeHtmlPage "about.html" $
-    generateAboutPage siteData.siteConfig navItems searchEntries siteData.aboutPage
+    generateAboutPage siteData.siteConfig generatedAt navItems searchEntries siteData.aboutPage
   writeHtmlPage "members.html" $
-    generateMembersPage siteData.siteConfig navItems searchEntries siteData.membersPage
+    generateMembersPage siteData.siteConfig generatedAt navItems searchEntries siteData.membersPage
   writeHtmlPage "brokers.html" $
-    generateBrokersPage siteData.siteConfig navItems searchEntries siteData.brokersPage
+    generateBrokersPage siteData.siteConfig generatedAt navItems searchEntries siteData.brokersPage
   writeHtmlPage "contact.html" $
-    generateContactPage siteData.siteConfig navItems searchEntries siteData.contactPage
+    generateContactPage siteData.siteConfig generatedAt navItems searchEntries siteData.contactPage
   writeHtmlPage "trivselregler.html" $
-    generateTrivselreglerPage siteData.siteConfig navItems searchEntries siteData.trivselreglerPage
+    generateTrivselreglerPage siteData.siteConfig generatedAt navItems searchEntries siteData.trivselreglerPage
   writeHtmlPage "documents.html" $
-    generateDocumentsPage siteData.siteConfig navItems searchEntries siteData.documentsPage
+    generateDocumentsPage siteData.siteConfig generatedAt navItems searchEntries siteData.documentsPage
   putStrLn "HTML pages generated."
   putStrLn ""
 
@@ -91,3 +94,8 @@ writeHtmlPage filename content = do
   let path = webDir </> filename
   putStrLn $ "Writing: " <> path
   TIO.writeFile path content
+
+formatTimestamp :: IO Text
+formatTimestamp = do
+  now <- getZonedTime
+  pure (T.pack (formatTime defaultTimeLocale "%Y-%m-%d %H:%M" now))

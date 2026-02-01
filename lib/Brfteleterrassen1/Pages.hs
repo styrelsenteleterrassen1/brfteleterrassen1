@@ -104,8 +104,8 @@ slugify =
     trimDashes = T.dropAround (== '-')
 
 -- | Generate the HTML page layout
-pageLayout :: SiteConfig -> [NavItem] -> [SearchEntry] -> Text -> Text -> Text -> Text
-pageLayout config navItems searchEntries currentPage pageTitle content =
+pageLayout :: SiteConfig -> Text -> [NavItem] -> [SearchEntry] -> Text -> Text -> Text -> Text
+pageLayout config generatedAt navItems searchEntries currentPage pageTitle content =
   doctype
     <> html_
       ( head_
@@ -123,7 +123,7 @@ pageLayout config navItems searchEntries currentPage pageTitle content =
                 <> pageNav navItems currentPage
                 <> pageSearch searchEntries
                 <> main_ content
-                <> pageFooter config
+                <> pageFooter config generatedAt
                 <> searchScript searchEntries
                 <> sectionLinkScript
             )
@@ -189,9 +189,9 @@ pageSearch entries
         )
 
 -- | Generate the page footer
-pageFooter :: SiteConfig -> Text
-pageFooter config =
-  footer_ (p_ ("© " <> config.name))
+pageFooter :: SiteConfig -> Text -> Text
+pageFooter config generatedAt =
+  footer_ (p_ ("© " <> config.name) <> p_ ("Senast uppdaterad: " <> generatedAt))
 
 renderSectionHeading :: Text -> Text -> Text
 renderSectionHeading heading sectionId =
@@ -272,9 +272,9 @@ renderSection (Section {heading = sectionHeading, content = sectionContent}) sec
                 )
 
 -- | Generate the home page
-generateHomePage :: SiteConfig -> [NavItem] -> [SearchEntry] -> Page -> NewsData -> Text
-generateHomePage config navItems searchEntries page newsData =
-  pageLayout config navItems searchEntries "home" page.title $
+generateHomePage :: SiteConfig -> Text -> [NavItem] -> [SearchEntry] -> Page -> NewsData -> Text
+generateHomePage config generatedAt navItems searchEntries page newsData =
+  pageLayout config generatedAt navItems searchEntries "home" page.title $
     h2_ page.title
       <> T.concat (map (uncurry renderSection) (sortedSectionsWithIds (sectionHeadingText . (.heading)) page.sections))
       <> renderNewsFeed newsData
@@ -294,44 +294,44 @@ generateHomePage config navItems searchEntries page newsData =
           <> p_ itemText
 
 -- | Generate the about page
-generateAboutPage :: SiteConfig -> [NavItem] -> [SearchEntry] -> Page -> Text
-generateAboutPage config navItems searchEntries page =
-  pageLayout config navItems searchEntries "about" page.title $
+generateAboutPage :: SiteConfig -> Text -> [NavItem] -> [SearchEntry] -> Page -> Text
+generateAboutPage config generatedAt navItems searchEntries page =
+  pageLayout config generatedAt navItems searchEntries "about" page.title $
     h2_ page.title
       <> T.concat (map (uncurry renderSection) (sortedSectionsWithIds (sectionHeadingText . (.heading)) page.sections))
 
 -- | Generate the members page
-generateMembersPage :: SiteConfig -> [NavItem] -> [SearchEntry] -> Page -> Text
-generateMembersPage config navItems searchEntries page =
-  pageLayout config navItems searchEntries "members" page.title $
+generateMembersPage :: SiteConfig -> Text -> [NavItem] -> [SearchEntry] -> Page -> Text
+generateMembersPage config generatedAt navItems searchEntries page =
+  pageLayout config generatedAt navItems searchEntries "members" page.title $
     h2_ page.title
       <> T.concat (map (uncurry renderSection) (sortedSectionsWithIds (sectionHeadingText . (.heading)) page.sections))
 
 -- | Generate the brokers page
-generateBrokersPage :: SiteConfig -> [NavItem] -> [SearchEntry] -> Page -> Text
-generateBrokersPage config navItems searchEntries page =
-  pageLayout config navItems searchEntries "brokers" page.title $
+generateBrokersPage :: SiteConfig -> Text -> [NavItem] -> [SearchEntry] -> Page -> Text
+generateBrokersPage config generatedAt navItems searchEntries page =
+  pageLayout config generatedAt navItems searchEntries "brokers" page.title $
     h2_ page.title
       <> T.concat (map (uncurry renderSection) (sortedSectionsWithIds (sectionHeadingText . (.heading)) page.sections))
 
 -- | Generate the contact page
-generateContactPage :: SiteConfig -> [NavItem] -> [SearchEntry] -> Page -> Text
-generateContactPage config navItems searchEntries page =
-  pageLayout config navItems searchEntries "contact" page.title $
+generateContactPage :: SiteConfig -> Text -> [NavItem] -> [SearchEntry] -> Page -> Text
+generateContactPage config generatedAt navItems searchEntries page =
+  pageLayout config generatedAt navItems searchEntries "contact" page.title $
     h2_ page.title
       <> T.concat (map (uncurry renderSection) (sortedSectionsWithIds (sectionHeadingText . (.heading)) page.sections))
 
 -- | Generate the trivselregler (house rules) page
-generateTrivselreglerPage :: SiteConfig -> [NavItem] -> [SearchEntry] -> Page -> Text
-generateTrivselreglerPage config navItems searchEntries page =
-  pageLayout config navItems searchEntries "trivselregler" page.title $
+generateTrivselreglerPage :: SiteConfig -> Text -> [NavItem] -> [SearchEntry] -> Page -> Text
+generateTrivselreglerPage config generatedAt navItems searchEntries page =
+  pageLayout config generatedAt navItems searchEntries "trivselregler" page.title $
     h2_ page.title
       <> T.concat (map (uncurry renderSection) (sortedSectionsWithIds (sectionHeadingText . (.heading)) page.sections))
 
 -- | Generate the documents page
-generateDocumentsPage :: SiteConfig -> [NavItem] -> [SearchEntry] -> Page -> Text
-generateDocumentsPage config navItems searchEntries page =
-  pageLayout config navItems searchEntries "documents" page.title $
+generateDocumentsPage :: SiteConfig -> Text -> [NavItem] -> [SearchEntry] -> Page -> Text
+generateDocumentsPage config generatedAt navItems searchEntries page =
+  pageLayout config generatedAt navItems searchEntries "documents" page.title $
     h2_ page.title
       <> T.concat (map (uncurry renderSection) (sortedSectionsWithIds (sectionHeadingText . (.heading)) page.sections))
 

@@ -162,12 +162,12 @@ pageSearch entries
         ( tag
             "label"
             [("class", "sr-only"), ("for", "site-search")]
-            "Sok i rubriker"
+            "Sök"
             <> tag_
               "input"
               [ ("id", "site-search"),
                 ("type", "search"),
-                ("placeholder", "Sok i rubriker"),
+                ("placeholder", "Sök"),
                 ("autocomplete", "off"),
                 ("class", "nav-search-input"),
                 ("data-search-input", "true"),

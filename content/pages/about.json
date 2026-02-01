@@ -46,7 +46,7 @@
     {
       "heading": "Hitta hit",
       "kind": "html",
-      "content": "<iframe title=\"Karta till BRF Teleterrassen 1\" src=\"https://www.google.com/maps/place/59%C2%B014'48.7%22N+18%C2%B005'59.5%22E/@59.2468697,18.0986436,19z/data=!3m1!4b1!4m13!1m8!3m7!1s0x465f79b4dd9aaea9:0x5254089326d93c24!2sHammar%C3%B6gatan+10,+123+40+Farsta!3b1!8m2!3d59.2470152!4d18.1000883!16s%2Fg%2F11sv5z86mp!3m3!8m2!3d59.246869!4d18.09986?entry=ttu&g_ep=EgoyMDI2MDEyOC4wIKXMDSoASAFQAw%3D%3D\" width=\"100%\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>"
+      "content": "<iframe title=\"Karta till BRF Teleterrassen 1\" src=\"https://www.google.com/maps?q=59.246869,18.09986&output=embed\" width=\"100%\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>"
     }
   ]
 }

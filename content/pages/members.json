@@ -42,6 +42,11 @@
       "content": "<strong>Aimo</strong><br>Telefon: 0771-96 90 06<br>Telefontider: Vardagar 08:00-16:00<br>E-post: <a href=\"mailto:Jani.haase@aimopark.se\">Jani.haase@aimopark.se</a>"
     },
     {
+      "heading": "Infästningsmanual",
+      "kind": "html",
+      "content": "<strong>Viktig att tänka på!</strong><br><br>Du har eget ansvar att kontrollera var rörstammar och elledningar går innan du borrar i någon vägg.<ul><li>I tak får du borra max 3 cm djupt.</li><li>I innerväggar av betong får du borra max 5 cm djupt.</li><li>Innerväggar av gips består av 1 lager gips om 1,3 cm. Om du ska montera tyngre inredning behöver stålreglar sökas upp och dessa är placerade med cc 45 cm intervall.</li><li>Yttervägg av gips består av dubbelt lager gips om 2,6 cm.</li><li>Du får inte borra i några inbyggda trummor längs tak eller mot yttervägg, bakom dessa finns installationer och brandklassade stålbalkar.</li><li>Vi avråder från att borra i kakelväggar i badrumsmodul för att undvika uppkomst av sprickor och skador på tätskiktet.</li><li>Montering av persienner mellan fönsterglas är ej tillåtet, då upphör garantin från fönsterleverantören och ljud- och energiklassning kan skadas.</li></ul>Om du känner dig osäker så är det bättre att fråga innan du sätter igång att borra själv.<br><br>Lycka till!"
+    },
+    {
       "heading": "Cykelförvaring",
       "kind": "html",
       "content": "Cykelplatser finns i separata låsta cykelrum."

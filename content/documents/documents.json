@@ -48,6 +48,11 @@
         },
         {
           "type": "energideklaration",
+          "title": "Hammarögatan 6, 8 och 10 (Sammanfattning)",
+          "file": "Energideklaration-6-8-10-sammanfattning.pdf"
+        },
+        {
+          "type": "energideklaration",
           "title": "Hammarögatan 7",
           "file": "Energideklaration-7.pdf"
         }

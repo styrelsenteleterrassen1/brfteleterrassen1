@@ -6,6 +6,11 @@
       "documents": [
         {
           "type": "årsredovisning",
+          "title": "Årsredovisning 2024",
+          "file": "brf-teleterrassen-1-arsredovisning-2024.pdf"
+        },
+        {
+          "type": "årsredovisning",
           "title": "Årsredovisning 2023",
           "file": "brf-teleterrassen-1-arsredovisning-2023.pdf"
         },

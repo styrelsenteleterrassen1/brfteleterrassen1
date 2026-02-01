@@ -2,7 +2,6 @@
 - [ ] Utöka mäklarinfo: månadsavgift, avgiftsförändringar, lån/kvm, pantsättnings- och överlåtelseavgift, delat ägande, juridisk person, andrahandsuthyrning, underhållsplan
 - [ ] Utöka boendeinfo: felanmälan (jour/akut), skadedjursavtal, nycklar, städ/snöröjning, OVK, renoveringsrutiner + blanketter
 - [ ] Lägg till inflytt/utflytt-guide med checklista
-- [ ] Lägg till FAQ (andrahandsuthyrning, renoveringar, störningar, försäkring)
-- [ ] Lägg till nyheter + kalender (städdagar, stämmor, planerade avstängningar)
-- [ ] Dokumentbibliotek: underhållsplan, försäkring, stämmoprotokoll, policyer (andrahandsuthyrning, renovering)
+- [ ] Lägg till FAQ (andrahandsuthyrning, renoveringar)
+- [ ] Dokumentbibliotek: underhållsplan, stämmoprotokoll, policyer (andrahandsuthyrning, renovering)
 - [ ] Parkeringsinformation

@@ -134,12 +134,18 @@ pageHeader :: SiteConfig -> Text
 pageHeader config =
   header
     [("class", "site-header")]
-    ( img
-        [ ("src", "static/" <> config.headerImage),
-          ("alt", config.name),
-          ("class", "header-image")
+    ( a
+        [ ("href", "/"),
+          ("class", "site-header-link"),
+          ("aria-label", "Hem")
         ]
-        <> h1_ config.name
+        ( img
+            [ ("src", "static/" <> config.headerImage),
+              ("alt", config.name),
+              ("class", "header-image")
+            ]
+            <> h1_ config.name
+        )
     )
 
 -- | Generate the navigation menu

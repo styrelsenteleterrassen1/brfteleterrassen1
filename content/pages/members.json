@@ -14,7 +14,12 @@
     {
       "heading": "Boappa",
       "kind": "html",
-      "content": "Föreningen använder <a href=\"https://boappa.se/\" target=\"_blank\">Boappa</a> – Sveriges största app för kommunikation i bostadsrättsföreningar. Här kan du chatta med grannar och se föreningens dokument.<br><br><strong>Så kommer du igång:</strong><ol><li>Gå till <a href=\"https://boappa.se/\" target=\"_blank\">boappa.se</a> eller ladda ner appen (finns i App Store och Google Play)</li><li>Skapa ett konto och verifiera din e-postadress</li><li>Sök efter \"BRF Teleterrassen 1\" och skicka en anslutningsförfrågan</li><li>Styrelsen godkänner dig inom kort</li></ol>Frågor? Kontakta <a href=\"mailto:support@boappa.se\">support@boappa.se</a>"
+      "content": "Föreningen använder <a href=\"https://boappa.se/\" target=\"_blank\">Boappa</a> – Sveriges största app för kommunikation i bostadsrättsföreningar. Här kan du chatta med grannar, se föreningens dokument och kontakta styrelsen som medlem.<br><br><strong>Så kommer du igång:</strong><ol><li>Gå till <a href=\"https://boappa.se/\" target=\"_blank\">boappa.se</a> eller ladda ner appen (finns i App Store och Google Play)</li><li>Skapa ett konto och verifiera din e-postadress</li><li>Sök efter \"BRF Teleterrassen 1\" och skicka en anslutningsförfrågan</li><li>Styrelsen godkänner dig inom kort</li></ol>Frågor? Kontakta <a href=\"mailto:support@boappa.se\">support@boappa.se</a>"
+    },
+    {
+      "heading": "Inglasning av balkong",
+      "kind": "html",
+      "content": "Föreningen har via den gemensamma samfällighetsföreningen, tillsammans med BRF Teleterrassen 1 och BRF Teleterrassen 2, ett avtal med <a href=\"https://www.balkongrutan.se/\" target=\"_blank\">Balkongrutan</a> för balkonginglasning. Balkongrutan känner till våra föreningar och kan hjälpa till med underlag som ritningar samt frågor om bygglov.<br><br><strong>Viktigt:</strong> Du ska alltid anmäla önskad inglasning till <a href=\"contact.html#styrelsen\">styrelsen</a> och invänta styrelsens godkännande innan arbetet går vidare.<br><br>För snabbare hantering rekommenderar styrelsen att du först tar fram ritning och offert från Balkongrutan och bifogar detta när du kontaktar styrelsen."
     },
     {
       "heading": "Teknisk förvaltning",
